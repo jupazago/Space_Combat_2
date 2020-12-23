@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>recursos/fondo_prueba.jpg</file>
+        <file>recursos/data_base.txt</file>
+    </qresource>
+</RCC>
