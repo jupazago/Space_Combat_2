@@ -19,12 +19,14 @@ SOURCES += \
     humanidad.cpp \
     jugador.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    misil.cpp
 
 HEADERS += \
     humanidad.h \
     jugador.h \
-    mainwindow.h
+    mainwindow.h \
+    misil.h
 
 FORMS += \
     mainwindow.ui

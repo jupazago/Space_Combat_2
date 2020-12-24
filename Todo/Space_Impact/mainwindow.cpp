@@ -25,9 +25,11 @@ MainWindow::MainWindow(QWidget *parent)
     scene->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba.jpg"));
     ui->graphicsView->setScene(scene);
 
-    personaje = new Humanidad();
+    humanos = new Humanidad();
+    scene->addItem(humanos);
 
-    scene->addItem(personaje);
+    timer_misiles= new QTimer();
+    connect(timer_misiles, SIGNAL(timeout()), this, SLOT(Mover()));
 
 }
 
@@ -39,24 +41,30 @@ MainWindow::~MainWindow()
 void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
     if(evento->key()==Qt::Key_W){
-        personaje->MoveUp();
-        /*
-        for (auto p=paredes.begin(); p!=paredes.end(); p++) {
-            if(objCuerpo->collidesWithItem(*p)){
-                objCuerpo->MoveDown();
-            }
-        }
-        */
+        humanos->MoveUp();
     }else if(evento->key()==Qt::Key_S){
-        personaje->MoveDown();
-        /*
-        for (auto p=paredes.begin(); p!=paredes.end(); p++) {
-            if(personaje->collidesWithItem(*p)){
-                personaje->MoveUp();
-            }
-        }
-        */
+        humanos->MoveDown();
+    }
+
+    if(evento->key()==Qt::Key_Space){
+        double x= humanos->getPosx()+30;
+        double y= humanos->getPosy()+30;
+        double v= 100;
+        double a= -45;
+
+
+        a = (a*3.14159)/180;
+        //cuerpo = new Misil(x,y,v,a);
+        misiles.push_back(new Misil(x,y,v,a));
+        scene->addItem(misiles.back());
+        timer_misiles->start(5);
     }
 
 }
-
+//Mover misiles
+void MainWindow::Mover()
+{
+    QList<Misil*>::iterator it;
+    for(it = misiles.begin();it != misiles.end(); it++)
+       (*it)->ActualizarPosicion();
+}

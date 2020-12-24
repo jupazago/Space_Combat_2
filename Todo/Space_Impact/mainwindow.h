@@ -6,14 +6,15 @@
 #include <string>
 #include <humanidad.h>
 #include <jugador.h>
+#include <misil.h>
+#include <QList>
+#include <QTimer>
 #include <QKeyEvent>
-
 #include <QPainter>
 #include <QGraphicsItem>
 #include <QRectF>
 #include <QDesktopWidget>
 #include <QDebug>
-#include <QGraphicsScene>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,13 +28,23 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void Mover();
+
 private:
     Ui::MainWindow *ui;
+
+    //Escena
     QGraphicsScene *scene;
-
-    Humanidad *personaje;
-
     float x,y,ancho,alto;
+
+    //Nave
+    Humanidad *humanos;
+
+    //Misiles
+    QTimer *timer_misiles;
+    Misil *cuerpo;
+    QList<Misil*> misiles;
 
     void keyPressEvent(QKeyEvent *evento);
 };

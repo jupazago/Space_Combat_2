@@ -38,7 +38,7 @@ Humanidad::Humanidad(QObject *parent) : QObject(parent)
     columnas = 0;
     posx = 40;
     posy = 300;
-    vel = 3;
+    vel = 5;
     setPos(posx, posy);
 
     pixmap = new QPixmap(":/recursos/amongus.png");
