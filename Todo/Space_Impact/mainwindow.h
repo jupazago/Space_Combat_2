@@ -7,6 +7,7 @@
 #include <humanidad.h>
 #include <jugador.h>
 #include <misil.h>
+#include <enemigo.h>
 #include <QList>
 #include <QTimer>
 #include <QKeyEvent>
@@ -30,6 +31,7 @@ public:
 
 private slots:
     void Mover();
+    void MoverEnemigo();
 
 private:
     Ui::MainWindow *ui;
@@ -43,8 +45,12 @@ private:
 
     //Misiles
     QTimer *timer_misiles;
-    Misil *cuerpo;
     QList<Misil*> misiles;
+
+    //Enemigo
+    QTimer *timer_enemigo;
+    QList<Enemigo*> enemigos;
+
 
     void keyPressEvent(QKeyEvent *evento);
 };

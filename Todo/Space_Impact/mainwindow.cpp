@@ -7,14 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    //Creación de escena y fondo de pantalla
-    /*
-    scena = new QGraphicsScene;
-    ui->graphicsView->setScene(scena);
-    scena->setSceneRect(0,0,1000,600);
-    scena->backgroundBrush();
-    ui->graphicsView->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba.jpg"));
-    */
+    //Add escena
     QRect Desktop = QApplication::desktop()->screenGeometry();
     x = Desktop.x();
     y = Desktop.y();
@@ -25,11 +18,25 @@ MainWindow::MainWindow(QWidget *parent)
     scene->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba.jpg"));
     ui->graphicsView->setScene(scene);
 
+
+    //Add humanidad
     humanos = new Humanidad();
     scene->addItem(humanos);
 
-    timer_misiles= new QTimer();
+
+    //add enemigos lvl 1
+    enemigos.push_back(new Enemigo(x,y,1));
+    scene->addItem(enemigos.back());
+
+    timer_enemigo = new QTimer();
+    connect(timer_enemigo, SIGNAL(timeout()), this, SLOT(MoverEnemigo()));
+    timer_enemigo->start(20);
+
+
+    //add misiles humanidad
+    timer_misiles = new QTimer();
     connect(timer_misiles, SIGNAL(timeout()), this, SLOT(Mover()));
+
 
 }
 
@@ -68,3 +75,20 @@ void MainWindow::Mover()
     for(it = misiles.begin();it != misiles.end(); it++)
        (*it)->ActualizarPosicion();
 }
+
+//Mover Enemigo
+void MainWindow::MoverEnemigo()
+{
+
+    for(auto it = enemigos.begin(); it != enemigos.end(); it++){
+        (*it)->Move();
+    }
+
+}
+
+
+
+
+
+
+
