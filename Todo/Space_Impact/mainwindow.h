@@ -4,6 +4,16 @@
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <string>
+#include <humanidad.h>
+#include <jugador.h>
+#include <QKeyEvent>
+
+#include <QPainter>
+#include <QGraphicsItem>
+#include <QRectF>
+#include <QDesktopWidget>
+#include <QDebug>
+#include <QGraphicsScene>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,7 +29,12 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QGraphicsScene *scene;
 
-    QGraphicsScene *scena;
+    Humanidad *personaje;
+
+    float x,y,ancho,alto;
+
+    void keyPressEvent(QKeyEvent *evento);
 };
 #endif // MAINWINDOW_H
