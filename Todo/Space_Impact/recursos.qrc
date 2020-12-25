@@ -7,5 +7,7 @@
         <file>recursos/PC Computer - Among Us - Cafeteria Skeld.png</file>
         <file>recursos/bola.png</file>
         <file>recursos/amongus2.png</file>
+        <file>recursos/enemigo1.png</file>
+        <file>recursos/vidas.png</file>
     </qresource>
 </RCC>

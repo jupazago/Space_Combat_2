@@ -43,6 +43,9 @@ private:
     //Nave
     Humanidad *humanos;
 
+    //jugador
+    Jugador *jugador;
+
     //Misiles
     QTimer *timer_misiles;
     QList<Misil*> misiles;
@@ -51,6 +54,8 @@ private:
     QTimer *timer_enemigo;
     QList<Enemigo*> enemigos;
 
+    //comprobar eliminar vida
+    int contador;
 
     void keyPressEvent(QKeyEvent *evento);
 };

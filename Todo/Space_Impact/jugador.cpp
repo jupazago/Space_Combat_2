@@ -1,7 +1,5 @@
 #include "jugador.h"
-#include <QString>
-#include <QMessageBox>  //Mensaje
-#include <QTextStream>
+
 
 int Jugador::getClave() const
 {
@@ -11,6 +9,16 @@ int Jugador::getClave() const
 void Jugador::setClave(int value)
 {
     clave = value;
+}
+
+int Jugador::getVidas() const
+{
+    return vidas;
+}
+
+void Jugador::setVidas(int value)
+{
+    vidas = value;
 }
 
 Jugador::Jugador()
@@ -25,6 +33,7 @@ Jugador::Jugador(string usuario_, int clave_, int nivel_)
     usuario = usuario_;
     clave = clave_;
     nivel = nivel_;
+    vidas = 3;
 }
 
 string Jugador::getUsuario() const
@@ -58,7 +67,7 @@ void Jugador::crear_nuevo()
     //Guardamos el nuevo usuario
     if(archivo.open(QIODevice::WriteOnly | QIODevice::Append)){
         QTextStream out(&archivo);
-        QString texto = "\n" + QString::fromStdString(usuario) + " " + QString::number(clave) + " " + QString::number(nivel);
+        QString texto = "\n" + QString::fromStdString(usuario) + " " + QString::number(clave) + " " + QString::number(nivel) + " " + QString::number(vidas);
         out << texto;
         archivo.close();
     }
@@ -93,6 +102,8 @@ void Jugador::cargar(string usuario_, int clave_)
                     setUsuario(valor2.toStdString());
                     setClave(valor3.toInt());
                     setNivel(valor.toInt());
+                    valor = in.readLine();
+                    setVidas(valor.toInt());
                     break;
                 }
             }
@@ -107,6 +118,7 @@ void Jugador::guardar()
         string user;
         int pass;
         int level;
+        int vidas;
     };
 
     vector<Cuentas> contenedor;
@@ -130,6 +142,8 @@ void Jugador::guardar()
         cuenta.pass = valor.toInt();
         valor = in.readLine();
         cuenta.level = valor.toInt();
+        valor = in.readLine();
+        cuenta.vidas = valor.toInt();
 
         //Lo agregamos al vector de cuentas
         contenedor.push_back(cuenta);
@@ -155,7 +169,7 @@ void Jugador::guardar()
 
         //recorremos el vector para actualizar la base de datos
         for(auto p=begin(contenedor); p != end(contenedor); p++){
-            QString texto = QString::fromStdString(p->user) + " " + QString::number(p->pass) + " " + QString::number(p->level) + "\n";
+            QString texto = QString::fromStdString(p->user) + " " + QString::number(p->pass) + " " + QString::number(p->level) + " " + QString::number(p->vidas) + "\n";
             out << texto;
         }
     }
@@ -177,6 +191,7 @@ void Jugador::eliminar()
         string user;
         int pass;
         int level;
+        int vidas;
     };
 
     vector<Cuentas> contenedor;
@@ -200,6 +215,8 @@ void Jugador::eliminar()
         cuenta.pass = valor.toInt();
         valor = in.readLine();
         cuenta.level = valor.toInt();
+        valor = in.readLine();
+        cuenta.vidas = valor.toInt();
 
         //Lo agregamos al vector de cuentas
         contenedor.push_back(cuenta);
@@ -225,11 +242,24 @@ void Jugador::eliminar()
 
         //recorremos el vector para actualizar la base de datos
         for(auto p=begin(contenedor); p != end(contenedor); p++){
-            QString texto = QString::fromStdString(p->user) + " " + QString::number(p->pass) + " " + QString::number(p->level) + "\n";
+            QString texto = QString::fromStdString(p->user) + " " + QString::number(p->pass) + " " + QString::number(p->level) + " " + QString::number(p->vidas) + "\n";
             out << texto;
         }
     }
     archivo2.close();
 
 }
+
+Corazones *Jugador::graficar_vida()
+{
+    corazones = new Corazones();
+    return corazones;
+}
+
+void Jugador::eliminar_Corazon()
+{
+    corazones->Actualizacion(vidas);
+}
+
+
 

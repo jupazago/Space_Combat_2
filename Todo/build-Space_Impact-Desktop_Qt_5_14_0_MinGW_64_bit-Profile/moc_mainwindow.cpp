@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[5];
-    char stringdata0[41];
+    char stringdata0[47];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,11 +35,12 @@ static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
 QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
 QT_MOC_LITERAL(1, 11, 5), // "Mover"
 QT_MOC_LITERAL(2, 17, 0), // ""
-QT_MOC_LITERAL(3, 18, 9), // "MoverMapa"
-QT_MOC_LITERAL(4, 28, 12) // "MoverEnemigo"
+QT_MOC_LITERAL(3, 18, 12), // "MoverEnemigo"
+QT_MOC_LITERAL(4, 31, 15) // "quitarCorazones"
 
     },
-    "MainWindow\0Mover\0\0MoverMapa\0MoverEnemigo"
+    "MainWindow\0Mover\0\0MoverEnemigo\0"
+    "quitarCorazones"
 };
 #undef QT_MOC_LITERAL
 
@@ -76,8 +77,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->Mover(); break;
-        case 1: _t->MoverMapa(); break;
-        case 2: _t->MoverEnemigo(); break;
+        case 1: _t->MoverEnemigo(); break;
+        case 2: _t->quitarCorazones(); break;
         default: ;
         }
     }

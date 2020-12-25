@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+
     //Add escena
     QRect Desktop = QApplication::desktop()->screenGeometry();
     x = Desktop.x();
@@ -23,9 +24,17 @@ MainWindow::MainWindow(QWidget *parent)
     humanos = new Humanidad();
     scene->addItem(humanos);
 
+    //add jugador
+    jugador = new Jugador("jupazago", 1998, 1);
+    scene->addItem(jugador->graficar_vida());
+
+
+
 
     //add enemigos lvl 1
-    enemigos.push_back(new Enemigo(x,y,1));
+    enemigos.push_back(new Enemigo(800,300,1));
+    scene->addItem(enemigos.back());
+    enemigos.push_back(new Enemigo(1600,200,2));
     scene->addItem(enemigos.back());
 
     timer_enemigo = new QTimer();
@@ -36,7 +45,6 @@ MainWindow::MainWindow(QWidget *parent)
     //add misiles humanidad
     timer_misiles = new QTimer();
     connect(timer_misiles, SIGNAL(timeout()), this, SLOT(Mover()));
-
 
 }
 
@@ -60,8 +68,8 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         double a= -45;
 
 
-        a = (a*3.14159)/180;
-        //cuerpo = new Misil(x,y,v,a);
+        a = (a*3.14159)/180; //angulo en radianes
+
         misiles.push_back(new Misil(x,y,v,a));
         scene->addItem(misiles.back());
         timer_misiles->start(5);
@@ -79,13 +87,20 @@ void MainWindow::Mover()
 //Mover Enemigo
 void MainWindow::MoverEnemigo()
 {
-
+    contador =0;
     for(auto it = enemigos.begin(); it != enemigos.end(); it++){
         (*it)->Move();
+        if(humanos->getPosx() > (*it)->getPosx()){
+            scene->removeItem(enemigos.at(contador));
+            enemigos.removeAt(contador);
+            jugador->setVidas(jugador->getVidas()-1);
+            jugador->eliminar_Corazon();
+            break;
+        }
+        contador++;
     }
 
 }
-
 
 
 

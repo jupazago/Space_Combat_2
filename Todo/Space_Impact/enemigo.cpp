@@ -43,7 +43,7 @@ Enemigo::Enemigo(int posx_, int posy_, int nivel, QObject *parent) : QObject(par
 
     switch(nivel)
     {
-        case 1: pixmap = new QPixmap(":/recursos/amongus2.png");
+        case 1: pixmap = new QPixmap(":/recursos/enemigo1.png");
         break;
 
         case 2: pixmap = new QPixmap(":/recursos/amongus2.png");
@@ -58,7 +58,7 @@ Enemigo::Enemigo(int posx_, int posy_, int nivel, QObject *parent) : QObject(par
 
 
     //dimensiones de cada imagen
-    ancho = 80;
+    ancho = 160;
     alto = 100;
 
     timer->start(50);
@@ -67,7 +67,7 @@ Enemigo::Enemigo(int posx_, int posy_, int nivel, QObject *parent) : QObject(par
 
 void Enemigo::Actualizacion()
 {
-    columnas += 80;
+    columnas += 160;
     if(columnas >= 960){
         columnas =0;
     }

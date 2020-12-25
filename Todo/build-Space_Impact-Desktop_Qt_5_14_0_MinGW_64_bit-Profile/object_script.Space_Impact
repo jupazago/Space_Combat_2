@@ -1,3 +1,4 @@
+corazones.o
 enemigo.o
 humanidad.o
 jugador.o
@@ -5,6 +6,7 @@ main.o
 mainwindow.o
 misil.o
 qrc_recursos.o
+moc_corazones.o
 moc_enemigo.o
 moc_humanidad.o
 moc_mainwindow.o

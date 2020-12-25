@@ -42,4 +42,5 @@ public slots:
     void Actualizacion();
 
 };
+
 #endif // ENEMIGO_H
