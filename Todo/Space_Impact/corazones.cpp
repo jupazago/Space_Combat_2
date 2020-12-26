@@ -34,7 +34,7 @@ Corazones::Corazones(QObject *parent) : QObject(parent)
     pixmap = new QPixmap(":/recursos/vidas.png");
 
     //dimensiones de cada imagen
-    ancho = 358;
+    ancho = 355;
     alto = 81;
 
     Actualizacion(3);
@@ -48,16 +48,16 @@ void Corazones::Actualizacion(int n)
 {
     switch(n)
     {
-        case 1: columnas = 0;
+        case 1: columnas = 355;
         break;
 
-        case 2: columnas = 358;
+        case 2: columnas = 355*2;
         break;
 
-        case 3: columnas = 358*2;
+        case 3: columnas = 355*3;
         break;
 
-        default: pixmap = new QPixmap(":/recursos/amongus2.png");
+        default: columnas = 0;
     }
     this->update(-ancho/2,-alto/2,ancho,alto);
 }

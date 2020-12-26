@@ -8,6 +8,7 @@
 #include <jugador.h>
 #include <misil.h>
 #include <enemigo.h>
+#include <pared.h>
 #include <QList>
 #include <QTimer>
 #include <QKeyEvent>
@@ -54,8 +55,10 @@ private:
     QTimer *timer_enemigo;
     QList<Enemigo*> enemigos;
 
-    //comprobar eliminar vida
-    int contador;
+    //pared
+    QList<Pared *> paredes;
+    Pared *eliminacion_humana;
+    Pared *eliminacion_enemiga;
 
     void keyPressEvent(QKeyEvent *evento);
 };

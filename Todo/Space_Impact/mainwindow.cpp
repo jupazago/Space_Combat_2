@@ -36,10 +36,29 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(enemigos.back());
     enemigos.push_back(new Enemigo(1600,200,2));
     scene->addItem(enemigos.back());
+    enemigos.push_back(new Enemigo(1200,400,2));
+    scene->addItem(enemigos.back());
+    enemigos.push_back(new Enemigo(1000,400,2));
+    scene->addItem(enemigos.back());
 
+    //Pared
+    //                   x-y-ancho-alto
+    paredes.push_back(new Pared(0,100,1000,10));
+    scene->addItem(paredes.back());
+    paredes.push_back(new Pared(0,600,1000,10));
+    scene->addItem(paredes.back());
+
+    //Pared de eliminacion
+    eliminacion_humana = new Pared(1000,-1000,1,2600);
+    eliminacion_enemiga = new Pared(-200,-1000,1,2600);
+    scene->addItem(eliminacion_humana);
+    scene->addItem(eliminacion_enemiga);
+
+    //timer enemigo
     timer_enemigo = new QTimer();
     connect(timer_enemigo, SIGNAL(timeout()), this, SLOT(MoverEnemigo()));
     timer_enemigo->start(20);
+
 
 
     //add misiles humanidad
@@ -57,8 +76,25 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
     if(evento->key()==Qt::Key_W){
         humanos->MoveUp();
+
+        //choque con paredes
+        for (auto p=paredes.begin(); p!=paredes.end(); p++) {
+            if(humanos->collidesWithItem(*p)){
+                humanos->MoveDown();
+            }
+        }
+
     }else if(evento->key()==Qt::Key_S){
         humanos->MoveDown();
+
+        //choque con paredes
+        for (auto p=paredes.begin(); p!=paredes.end(); p++) {
+            if(humanos->collidesWithItem(*p)){
+                humanos->MoveUp();
+            }
+        }
+
+
     }
 
     if(evento->key()==Qt::Key_Space){
@@ -79,18 +115,27 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 //Mover misiles
 void MainWindow::Mover()
 {
+    int contador = 0;
     QList<Misil*>::iterator it;
-    for(it = misiles.begin();it != misiles.end(); it++)
+    for(it = misiles.begin();it != misiles.end(); it++){
        (*it)->ActualizarPosicion();
+
+        if((*it)->collidesWithItem(eliminacion_humana)){
+            scene->removeItem(misiles.at(contador));
+            misiles.removeAt(contador);
+            break;
+        }
+        contador++;
+    }
 }
 
 //Mover Enemigo
 void MainWindow::MoverEnemigo()
 {
-    contador =0;
+    int contador =0;
     for(auto it = enemigos.begin(); it != enemigos.end(); it++){
         (*it)->Move();
-        if(humanos->getPosx() > (*it)->getPosx()){
+        if((*it)->collidesWithItem(eliminacion_enemiga)){
             scene->removeItem(enemigos.at(contador));
             enemigos.removeAt(contador);
             jugador->setVidas(jugador->getVidas()-1);

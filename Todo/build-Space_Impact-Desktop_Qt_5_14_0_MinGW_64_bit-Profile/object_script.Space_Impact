@@ -5,6 +5,7 @@ jugador.o
 main.o
 mainwindow.o
 misil.o
+pared.o
 qrc_recursos.o
 moc_corazones.o
 moc_enemigo.o

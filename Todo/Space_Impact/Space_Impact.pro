@@ -22,7 +22,8 @@ SOURCES += \
     jugador.cpp \
     main.cpp \
     mainwindow.cpp \
-    misil.cpp
+    misil.cpp \
+    pared.cpp
 
 HEADERS += \
     corazones.h \
@@ -30,7 +31,8 @@ HEADERS += \
     humanidad.h \
     jugador.h \
     mainwindow.h \
-    misil.h
+    misil.h \
+    pared.h
 
 FORMS += \
     mainwindow.ui
