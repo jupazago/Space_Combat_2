@@ -2,12 +2,15 @@
     <qresource prefix="/">
         <file>recursos/fondo_prueba.jpg</file>
         <file>recursos/data_base.txt</file>
-        <file>recursos/pac2.png</file>
         <file>recursos/amongus.png</file>
-        <file>recursos/PC Computer - Among Us - Cafeteria Skeld.png</file>
         <file>recursos/bola.png</file>
         <file>recursos/amongus2.png</file>
         <file>recursos/enemigo1.png</file>
         <file>recursos/vidas.png</file>
+        <file>recursos/paisaje1.png</file>
+        <file>recursos/paisaje2.png</file>
+        <file>recursos/paisaje3.png</file>
+        <file>recursos/paisaje4.png</file>
+        <file>recursos/paisaje5.png</file>
     </qresource>
 </RCC>

@@ -6,10 +6,12 @@
 #include <QMessageBox>  //Mensaje
 #include <vector>
 #include <corazones.h>
+#include <puntuacion.h>
 #include <QString>
 #include <QTextStream>
 #include <QObject>
 #include <QGraphicsItem>
+#include <QGraphicsTextItem>
 #include <QTimer>
 #include <QPixmap>
 #include <QPainter>
@@ -24,11 +26,14 @@ class Jugador
     int nivel;
     int vidas;
     Corazones *corazones;
+    Puntuacion *puntuacion;
+    int puntos;
 
 public:
     //Constructores
     Jugador();
-    Jugador(string usuario_, int clave_, int nivel_);
+    Jugador(string usuario_, int clave_);
+    Jugador(string usuario_, int clave_,int vidas_, int nivel_, int puntos_);
 
     //Set y get
     string getUsuario() const;
@@ -39,6 +44,8 @@ public:
     void setNivel(int value);
     int getVidas() const;
     void setVidas(int value);
+    int getPuntos() const;
+    void setPuntos(int value);
 
     //Metodos
     void crear_nuevo();
@@ -46,9 +53,12 @@ public:
     void guardar();
     void reiniciar();
     void eliminar();
+
     Corazones *graficar_vida();
     void eliminar_Corazon();
 
+    Puntuacion *crear_puntos();
+    void incrementar_puntos(int valor);
 };
 
 #endif // JUGADOR_H

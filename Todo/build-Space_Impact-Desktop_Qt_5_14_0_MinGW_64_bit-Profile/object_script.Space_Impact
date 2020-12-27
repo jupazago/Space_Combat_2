@@ -5,9 +5,12 @@ jugador.o
 main.o
 mainwindow.o
 misil.o
+paisaje.o
 pared.o
+puntuacion.o
 qrc_recursos.o
 moc_corazones.o
 moc_enemigo.o
 moc_humanidad.o
 moc_mainwindow.o
+moc_paisaje.o

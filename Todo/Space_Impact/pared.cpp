@@ -47,7 +47,8 @@ QRectF Pared::boundingRect() const
 
 void Pared::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::black);
+    painter->setBrush(Qt::transparent);
+    painter->setOpacity(0);
     painter->drawRect(boundingRect());
     //proceso para que las paredes sean graficables en la escena
 }

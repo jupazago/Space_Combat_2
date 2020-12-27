@@ -25,8 +25,9 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(humanos);
 
     //add jugador
-    jugador = new Jugador("jupazago", 1998, 1);
-    scene->addItem(jugador->graficar_vida());
+    jugador = new Jugador("jupazago", 1998);
+    scene->addItem(jugador->graficar_vida());   //corazones
+    scene->addItem(jugador->crear_puntos());    //puntuacion
 
 
 
@@ -38,14 +39,12 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(enemigos.back());
     enemigos.push_back(new Enemigo(1200,400,2));
     scene->addItem(enemigos.back());
-    enemigos.push_back(new Enemigo(1000,400,2));
-    scene->addItem(enemigos.back());
 
     //Pared
     //                   x-y-ancho-alto
-    paredes.push_back(new Pared(0,100,1000,10));
+    paredes.push_back(new Pared(-1,100,1000,10));
     scene->addItem(paredes.back());
-    paredes.push_back(new Pared(0,600,1000,10));
+    paredes.push_back(new Pared(-1,600,1000,10));
     scene->addItem(paredes.back());
 
     //Pared de eliminacion
@@ -53,6 +52,13 @@ MainWindow::MainWindow(QWidget *parent)
     eliminacion_enemiga = new Pared(-200,-1000,1,2600);
     scene->addItem(eliminacion_humana);
     scene->addItem(eliminacion_enemiga);
+
+
+    //add nubes
+    nubes.push_back(new Paisaje(1500,100,1));
+    scene->addItem(nubes.back());
+    nubes.push_back(new Paisaje(1800,300,2));
+    scene->addItem(nubes.back());
 
     //timer enemigo
     timer_enemigo = new QTimer();
@@ -64,6 +70,8 @@ MainWindow::MainWindow(QWidget *parent)
     //add misiles humanidad
     timer_misiles = new QTimer();
     connect(timer_misiles, SIGNAL(timeout()), this, SLOT(Mover()));
+
+
 
 }
 
@@ -112,6 +120,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
     }
 
 }
+
 //Mover misiles
 void MainWindow::Mover()
 {
@@ -125,8 +134,26 @@ void MainWindow::Mover()
             misiles.removeAt(contador);
             break;
         }
-        contador++;
+
+
+        int contador2 = 0;
+        for(auto itt = enemigos.begin(); itt != enemigos.end(); itt++){
+            if(sqrt(pow((*it)->getPosx()-(*itt)->getPosx(),2)   + pow((*it)->getPosy()-(*itt)->getPosy(),2)) < 50){
+                scene->removeItem(enemigos.at(contador2));
+                enemigos.removeAt(contador2);
+
+                scene->removeItem(misiles.at(contador));
+                misiles.removeAt(contador);
+                break;
+            }
+            contador2++;
+        }
+    contador++;
     }
+
+
+
+
 }
 
 //Mover Enemigo
@@ -140,15 +167,17 @@ void MainWindow::MoverEnemigo()
             enemigos.removeAt(contador);
             jugador->setVidas(jugador->getVidas()-1);
             jugador->eliminar_Corazon();
+            jugador->incrementar_puntos(10);
             break;
         }
         contador++;
     }
 
+    //Mover Paisaje
+    for(auto it = nubes.begin(); it != nubes.end(); it++){
+        (*it)->Move();
+
+
+    }
 }
-
-
-
-
-
 

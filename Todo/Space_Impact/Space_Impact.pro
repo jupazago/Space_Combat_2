@@ -23,7 +23,9 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     misil.cpp \
-    pared.cpp
+    paisaje.cpp \
+    pared.cpp \
+    puntuacion.cpp
 
 HEADERS += \
     corazones.h \
@@ -32,7 +34,9 @@ HEADERS += \
     jugador.h \
     mainwindow.h \
     misil.h \
-    pared.h
+    paisaje.h \
+    pared.h \
+    puntuacion.h
 
 FORMS += \
     mainwindow.ui

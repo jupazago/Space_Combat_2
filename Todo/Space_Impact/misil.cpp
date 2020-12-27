@@ -1,4 +1,6 @@
 #include "misil.h"
+#include <enemigo.h>
+#include <QGraphicsScene>
 
 double Misil::getPosx() const
 {

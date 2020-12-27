@@ -1,14 +1,18 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QGraphicsScene>
-#include <string>
+
 #include <humanidad.h>
 #include <jugador.h>
 #include <misil.h>
 #include <enemigo.h>
 #include <pared.h>
+#include <paisaje.h>
+#include <math.h>
+
+#include <QMainWindow>
+#include <QGraphicsScene>
+#include <string>
 #include <QList>
 #include <QTimer>
 #include <QKeyEvent>
@@ -59,6 +63,9 @@ private:
     QList<Pared *> paredes;
     Pared *eliminacion_humana;
     Pared *eliminacion_enemiga;
+
+    //Paisajes - Nubes
+    QList<Paisaje *> nubes;
 
     void keyPressEvent(QKeyEvent *evento);
 };
