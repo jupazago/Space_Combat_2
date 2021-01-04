@@ -35,8 +35,13 @@ public:
     ~MainWindow();
 
 private slots:
+    void nivel1();
+
+
+    void verificarChoques();
     void Mover();
     void MoverEnemigo();
+    void MoverPaisaje();
 
 private:
     Ui::MainWindow *ui;
@@ -54,6 +59,9 @@ private:
     //Misiles
     QTimer *timer_misiles;
     QList<Misil*> misiles;
+
+    //choques
+    QTimer *timer_choques;
 
     //Enemigo
     QTimer *timer_enemigo;

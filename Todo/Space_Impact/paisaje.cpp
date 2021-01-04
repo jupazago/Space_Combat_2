@@ -9,8 +9,8 @@ Paisaje::Paisaje(int posx_, int posy_, int figura, QObject *parent) : QObject(pa
     setPos(posx, posy);
 
     //dimensiones de cada imagen
-    ancho = 500;
-    alto = 200;
+    ancho = 1000;
+    alto = 300;
 
     filas = 0;
     columnas = 0;
@@ -32,6 +32,10 @@ Paisaje::Paisaje(int posx_, int posy_, int figura, QObject *parent) : QObject(pa
 
         case 5: pixmap = new QPixmap(":/recursos/paisaje5.png");
         break;
+
+        case 6: pixmap = new QPixmap(":/recursos/fondo_lvl1.png");
+        break;
+
 
         default: pixmap = new QPixmap(":/recursos/paisaje1.png");
     }

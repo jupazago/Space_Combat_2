@@ -19,26 +19,10 @@ MainWindow::MainWindow(QWidget *parent)
     scene->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba.jpg"));
     ui->graphicsView->setScene(scene);
 
-
-    //Add humanidad
-    humanos = new Humanidad();
-    scene->addItem(humanos);
-
     //add jugador
     jugador = new Jugador("jupazago", 1998);
     scene->addItem(jugador->graficar_vida());   //corazones
     scene->addItem(jugador->crear_puntos());    //puntuacion
-
-
-
-
-    //add enemigos lvl 1
-    enemigos.push_back(new Enemigo(800,300,1));
-    scene->addItem(enemigos.back());
-    enemigos.push_back(new Enemigo(1600,200,2));
-    scene->addItem(enemigos.back());
-    enemigos.push_back(new Enemigo(1200,400,2));
-    scene->addItem(enemigos.back());
 
     //Pared
     //                   x-y-ancho-alto
@@ -54,25 +38,8 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(eliminacion_enemiga);
 
 
-    //add nubes
-    nubes.push_back(new Paisaje(1500,100,1));
-    scene->addItem(nubes.back());
-    nubes.push_back(new Paisaje(1800,300,2));
-    scene->addItem(nubes.back());
 
-    //timer enemigo
-    timer_enemigo = new QTimer();
-    connect(timer_enemigo, SIGNAL(timeout()), this, SLOT(MoverEnemigo()));
-    timer_enemigo->start(20);
-
-
-
-    //add misiles humanidad
-    timer_misiles = new QTimer();
-    connect(timer_misiles, SIGNAL(timeout()), this, SLOT(Mover()));
-
-
-
+    nivel1();
 }
 
 MainWindow::~MainWindow()
@@ -124,31 +91,32 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 //Mover misiles
 void MainWindow::Mover()
 {
-    int contador = 0;
+    int contador1 = 0;
     QList<Misil*>::iterator it;
     for(it = misiles.begin();it != misiles.end(); it++){
        (*it)->ActualizarPosicion();
 
         if((*it)->collidesWithItem(eliminacion_humana)){
-            scene->removeItem(misiles.at(contador));
-            misiles.removeAt(contador);
+            scene->removeItem(misiles.at(contador1));
+            misiles.removeAt(contador1);
             break;
         }
 
 
         int contador2 = 0;
+        /*
         for(auto itt = enemigos.begin(); itt != enemigos.end(); itt++){
-            if(sqrt(pow((*it)->getPosx()-(*itt)->getPosx(),2)   + pow((*it)->getPosy()-(*itt)->getPosy(),2)) < 50){
+            if(sqrt(pow((*it)->getPosx()-(*itt)->getPosx(),2)   + pow((*it)->getPosy()-(*itt)->getPosy(),2)) < 100){
                 scene->removeItem(enemigos.at(contador2));
                 enemigos.removeAt(contador2);
 
-                scene->removeItem(misiles.at(contador));
-                misiles.removeAt(contador);
+                scene->removeItem(misiles.at(contador1));
+                misiles.removeAt(contador1);
                 break;
             }
             contador2++;
-        }
-    contador++;
+        }*/
+    contador1++;
     }
 
 
@@ -172,12 +140,87 @@ void MainWindow::MoverEnemigo()
         }
         contador++;
     }
+    MoverPaisaje();
+}
 
-    //Mover Paisaje
+//Mover Paisaje
+void MainWindow::MoverPaisaje()
+{
     for(auto it = nubes.begin(); it != nubes.end(); it++){
         (*it)->Move();
-
-
     }
 }
 
+//verificar Choques
+void MainWindow::verificarChoques()
+{
+    int contador1 = 0;
+    int contador2 = 0;
+    for(auto it = enemigos.begin(); it != enemigos.end(); it++){
+        for(auto itt = misiles.begin(); itt != misiles.end(); itt++){
+/*
+            if((*it)->collidesWithItem((*itt))){
+                scene->removeItem(*it);
+                enemigos.erase(it);
+
+                scene->removeItem(*itt);
+                misiles.erase(itt);
+                break;
+            }*/
+            if(sqrt(pow((*it)->getPosx()-(*itt)->getPosx(),2)   + pow((*it)->getPosy()-(*itt)->getPosy(),2)) < 100){
+                scene->removeItem(*it);
+                enemigos.erase(it);
+
+                scene->removeItem(*itt);
+                misiles.erase(itt);
+                break;
+            }
+
+            contador2++;
+        }
+        contador1++;
+    }
+}
+
+
+
+
+void MainWindow::nivel1()
+{
+
+    //add enemigos lvl 1
+    enemigos.push_back(new Enemigo(800,300,1));
+    scene->addItem(enemigos.back());
+    enemigos.push_back(new Enemigo(1600,200,2));
+    scene->addItem(enemigos.back());
+    enemigos.push_back(new Enemigo(1200,400,2));
+    scene->addItem(enemigos.back());
+
+    //add nubes
+    nubes.push_back(new Paisaje(1500,100,1));
+    scene->addItem(nubes.back());
+    nubes.push_back(new Paisaje(1800,300,2));
+    scene->addItem(nubes.back());
+
+    scene->addItem(new Paisaje(500,585,6));
+
+    //timer enemigo
+    timer_enemigo = new QTimer();
+    connect(timer_enemigo, SIGNAL(timeout()), this, SLOT(MoverEnemigo()));
+    timer_enemigo->start(20);
+
+
+    //add misiles humanidad
+    timer_misiles = new QTimer();
+    connect(timer_misiles, SIGNAL(timeout()), this, SLOT(Mover()));
+
+    //Add humanidad
+    humanos = new Humanidad();
+    scene->addItem(humanos);
+
+
+    //add verificar choques
+    timer_choques = new QTimer();
+    connect(timer_choques, SIGNAL(timeout()), this, SLOT(verificarChoques()));
+    timer_choques->start(100);
+}

@@ -12,5 +12,10 @@
         <file>recursos/paisaje3.png</file>
         <file>recursos/paisaje4.png</file>
         <file>recursos/paisaje5.png</file>
+        <file>recursos/fondo_lvl1.png</file>
+        <file>recursos/fondo_lvl2.png</file>
+        <file>recursos/fondo_lvl3.png</file>
+        <file>recursos/fondo_lvl4.png</file>
+        <file>recursos/fondo_lvl5.png</file>
     </qresource>
 </RCC>
