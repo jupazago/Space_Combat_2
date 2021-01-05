@@ -8,8 +8,9 @@
 #include <enemigo.h>
 #include <pared.h>
 #include <paisaje.h>
-#include <math.h>
+#include <jefe.h>
 
+#include <math.h>
 #include <QMainWindow>
 #include <QGraphicsScene>
 #include <string>
@@ -20,7 +21,8 @@
 #include <QGraphicsItem>
 #include <QRectF>
 #include <QDesktopWidget>
-#include <QDebug>
+#include <stdlib.h>     /* srand, rand */
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -66,6 +68,9 @@ private:
     //Enemigo
     QTimer *timer_enemigo;
     QList<Enemigo*> enemigos;
+
+    //jefe
+    Jefe *jefe1;;
 
     //pared
     QList<Pared *> paredes;

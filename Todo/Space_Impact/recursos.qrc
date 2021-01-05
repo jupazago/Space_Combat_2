@@ -17,5 +17,6 @@
         <file>recursos/fondo_lvl3.png</file>
         <file>recursos/fondo_lvl4.png</file>
         <file>recursos/fondo_lvl5.png</file>
+        <file>recursos/jefe1.png</file>
     </qresource>
 </RCC>

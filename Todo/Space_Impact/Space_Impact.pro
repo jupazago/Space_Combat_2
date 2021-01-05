@@ -19,6 +19,7 @@ SOURCES += \
     corazones.cpp \
     enemigo.cpp \
     humanidad.cpp \
+    jefe.cpp \
     jugador.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -31,6 +32,7 @@ HEADERS += \
     corazones.h \
     enemigo.h \
     humanidad.h \
+    jefe.h \
     jugador.h \
     mainwindow.h \
     misil.h \

@@ -72,13 +72,23 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
     }
 
-    if(evento->key()==Qt::Key_Space){
+    if(evento->key()==Qt::Key_1){
         double x= humanos->getPosx()+30;
         double y= humanos->getPosy()+30;
         double v= 100;
         double a= -45;
+        a = (a*3.14159)/180; //angulo en radianes
 
+        misiles.push_back(new Misil(x,y,v,a));
+        scene->addItem(misiles.back());
+        timer_misiles->start(5);
+    }
 
+    if(evento->key()==Qt::Key_2){
+        double x= humanos->getPosx()+30;
+        double y= humanos->getPosy()+30;
+        double v= 35;
+        double a= 45;
         a = (a*3.14159)/180; //angulo en radianes
 
         misiles.push_back(new Misil(x,y,v,a));
@@ -101,41 +111,21 @@ void MainWindow::Mover()
             misiles.removeAt(contador1);
             break;
         }
-
-
-        int contador2 = 0;
-        /*
-        for(auto itt = enemigos.begin(); itt != enemigos.end(); itt++){
-            if(sqrt(pow((*it)->getPosx()-(*itt)->getPosx(),2)   + pow((*it)->getPosy()-(*itt)->getPosy(),2)) < 100){
-                scene->removeItem(enemigos.at(contador2));
-                enemigos.removeAt(contador2);
-
-                scene->removeItem(misiles.at(contador1));
-                misiles.removeAt(contador1);
-                break;
-            }
-            contador2++;
-        }*/
     contador1++;
     }
-
-
-
-
 }
 
 //Mover Enemigo
 void MainWindow::MoverEnemigo()
 {
-    int contador =0;
+    int contador = 0;
     for(auto it = enemigos.begin(); it != enemigos.end(); it++){
         (*it)->Move();
         if((*it)->collidesWithItem(eliminacion_enemiga)){
-            scene->removeItem(enemigos.at(contador));
-            enemigos.removeAt(contador);
+            scene->removeItem(*it);
+            enemigos.erase(it);
             jugador->setVidas(jugador->getVidas()-1);
             jugador->eliminar_Corazon();
-            jugador->incrementar_puntos(10);
             break;
         }
         contador++;
@@ -158,24 +148,17 @@ void MainWindow::verificarChoques()
     int contador2 = 0;
     for(auto it = enemigos.begin(); it != enemigos.end(); it++){
         for(auto itt = misiles.begin(); itt != misiles.end(); itt++){
-/*
-            if((*it)->collidesWithItem((*itt))){
+            if(sqrt(pow((*it)->getPosx()-(*itt)->getPosx(),2)   + pow((*it)->getPosy()-(*itt)->getPosy(),2)) < 50){
                 scene->removeItem(*it);
                 enemigos.erase(it);
 
                 scene->removeItem(*itt);
                 misiles.erase(itt);
-                break;
-            }*/
-            if(sqrt(pow((*it)->getPosx()-(*itt)->getPosx(),2)   + pow((*it)->getPosy()-(*itt)->getPosy(),2)) < 100){
-                scene->removeItem(*it);
-                enemigos.erase(it);
 
-                scene->removeItem(*itt);
-                misiles.erase(itt);
+                jugador->incrementar_puntos(10);
+
                 break;
             }
-
             contador2++;
         }
         contador1++;
@@ -189,20 +172,28 @@ void MainWindow::nivel1()
 {
 
     //add enemigos lvl 1
-    enemigos.push_back(new Enemigo(800,300,1));
-    scene->addItem(enemigos.back());
-    enemigos.push_back(new Enemigo(1600,200,2));
-    scene->addItem(enemigos.back());
-    enemigos.push_back(new Enemigo(1200,400,2));
-    scene->addItem(enemigos.back());
+    int ejey;
+    for (int i=500; i<10000; i+=500) {
+        ejey = rand() %400 + 100;
+        enemigos.push_back(new Enemigo(i, ejey, 1));
+        scene->addItem(enemigos.back());
+    }
 
     //add nubes
-    nubes.push_back(new Paisaje(1500,100,1));
-    scene->addItem(nubes.back());
-    nubes.push_back(new Paisaje(1800,300,2));
-    scene->addItem(nubes.back());
-
+    int ejex, nube=1;
+    ejey=0;
+    for (int i=0; i<100; i++) {
+        ejex = rand() %10000 + 1;
+        ejey = rand() %600 + 1;
+        nubes.push_back(new Paisaje(ejex, ejey, nube));
+        scene->addItem(nubes.back());
+        nube++;
+        if(nube>5) nube = 1;
+    }
+    //montania
     scene->addItem(new Paisaje(500,585,6));
+
+
 
     //timer enemigo
     timer_enemigo = new QTimer();
@@ -223,4 +214,8 @@ void MainWindow::nivel1()
     timer_choques = new QTimer();
     connect(timer_choques, SIGNAL(timeout()), this, SLOT(verificarChoques()));
     timer_choques->start(100);
+
+    jefe1 = new Jefe(800, 200, 1);
+    scene->addItem(jefe1);
+
 }
