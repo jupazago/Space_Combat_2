@@ -30,15 +30,26 @@ void Jefe::setVel(int value)
     vel = value;
 }
 
+int Jefe::getSalud() const
+{
+    return salud;
+}
+
+void Jefe::setSalud(int value)
+{
+    salud = value;
+}
+
 Jefe::Jefe(int posx_, int posy_, int nivel, QObject *parent) : QObject(parent)
 {
-
+    
     timer = new QTimer();
     filas = 0;
     columnas = 0;
     posx = posx_;
     posy = posy_;
-    vel = 0;
+    vel = 2;
+    salud = 100*nivel;
     setPos(posx, posy);
 
     switch(nivel)
@@ -82,4 +93,17 @@ QRectF Jefe::boundingRect() const
 void Jefe::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawPixmap(-ancho/2,-alto/2,*pixmap,columnas,0,ancho,alto);
+}
+
+void Jefe::MoveUp()
+{
+    posy-=2*vel;
+    setPos(posx,posy);
+
+}
+
+void Jefe::MoveDown()
+{
+    posy+=2*vel;
+    setPos(posx,posy);
 }

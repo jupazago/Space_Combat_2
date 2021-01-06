@@ -30,6 +30,16 @@ void Enemigo::setVel(int value)
     vel = value;
 }
 
+int Enemigo::getSalud() const
+{
+    return salud;
+}
+
+void Enemigo::setSalud(int value)
+{
+    salud = value;
+}
+
 Enemigo::Enemigo(int posx_, int posy_, int nivel, QObject *parent) : QObject(parent)
 {
 
@@ -39,6 +49,7 @@ Enemigo::Enemigo(int posx_, int posy_, int nivel, QObject *parent) : QObject(par
     posx = posx_;
     posy = posy_;
     vel = 3;
+    salud = nivel;
     setPos(posx, posy);
 
     switch(nivel)

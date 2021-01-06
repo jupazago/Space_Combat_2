@@ -13,6 +13,7 @@ class Enemigo : public QObject, public QGraphicsItem
     int posx;
     int posy;
     int vel;
+    int salud;
 public:
     explicit Enemigo(int posx_, int posy_n, int nivel, QObject *parent = nullptr);
 
@@ -35,6 +36,9 @@ public:
 
     int getVel() const;
     void setVel(int value);
+
+    int getSalud() const;
+    void setSalud(int value);
 
 signals:
 

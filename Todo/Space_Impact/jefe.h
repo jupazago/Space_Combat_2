@@ -13,12 +13,16 @@ class Jefe : public QObject, public QGraphicsItem
     int posx;
     int posy;
     int vel;
+    int salud;
 
 public:
     explicit Jefe(int posx_, int posy_n, int nivel, QObject *parent = nullptr);
 
     QTimer * timer;
     QPixmap *pixmap;
+
+    void MoveUp();
+    void MoveDown();
 
     float filas, columnas;
     float ancho, alto;
@@ -34,6 +38,9 @@ public:
 
     int getVel() const;
     void setVel(int value);
+
+    int getSalud() const;
+    void setSalud(int value);
 
 signals:
 

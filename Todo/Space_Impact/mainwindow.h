@@ -39,9 +39,14 @@ public:
 private slots:
     void nivel1();
 
-
+    void invocarJefe1();
     void verificarChoques();
+    void verificarChoquesVsJefe();
+    void DisparoJefe();
     void Mover();
+
+    void Mover2();
+
     void MoverEnemigo();
     void MoverPaisaje();
 
@@ -58,9 +63,14 @@ private:
     //jugador
     Jugador *jugador;
 
+
     //Misiles
     QTimer *timer_misiles;
     QList<Misil*> misiles;
+
+    QTimer *timer_proyectiles;
+    QList<Misil*> proyectiles;
+
 
     //choques
     QTimer *timer_choques;
@@ -70,7 +80,11 @@ private:
     QList<Enemigo*> enemigos;
 
     //jefe
-    Jefe *jefe1;;
+    QTimer *timer_jefe1;
+    QTimer *timer_jefeVsMisiles;
+    QTimer *timer_jefeDisparo;
+    Jefe *jefe1;
+    int coord = 50;
 
     //pared
     QList<Pared *> paredes;

@@ -101,17 +101,26 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 //Mover misiles
 void MainWindow::Mover()
 {
-    int contador1 = 0;
-    QList<Misil*>::iterator it;
-    for(it = misiles.begin();it != misiles.end(); it++){
-       (*it)->ActualizarPosicion();
-
-        if((*it)->collidesWithItem(eliminacion_humana)){
-            scene->removeItem(misiles.at(contador1));
-            misiles.removeAt(contador1);
-            break;
+    if(misiles.size() > 0){
+        QList<Misil*>::iterator it;
+        for(it = misiles.begin();it != misiles.end(); it++){
+           (*it)->ActualizarPosicion();
+            if((*it)->collidesWithItem(eliminacion_humana)){
+                scene->removeItem(*it);
+                misiles.erase(it);
+                break;
+            }
         }
-    contador1++;
+    }
+}
+
+void MainWindow::Mover2()
+{
+    if(proyectiles.size() > 0){
+        QList<Misil*>::iterator itt;
+        for(itt = proyectiles.begin();itt != proyectiles.end(); itt++){
+           (*itt)->ActualizarPosicion();
+        }
     }
 }
 
@@ -144,14 +153,21 @@ void MainWindow::MoverPaisaje()
 //verificar Choques
 void MainWindow::verificarChoques()
 {
+
+    //Misiles vs enemigos
     int contador1 = 0;
     int contador2 = 0;
     for(auto it = enemigos.begin(); it != enemigos.end(); it++){
         for(auto itt = misiles.begin(); itt != misiles.end(); itt++){
             if(sqrt(pow((*it)->getPosx()-(*itt)->getPosx(),2)   + pow((*it)->getPosy()-(*itt)->getPosy(),2)) < 50){
-                scene->removeItem(*it);
-                enemigos.erase(it);
 
+
+                (*it)->setSalud((*it)->getSalud() -1);
+
+                if((*it)->getSalud() <=0){
+                    scene->removeItem(*it);
+                    enemigos.erase(it);
+                }
                 scene->removeItem(*itt);
                 misiles.erase(itt);
 
@@ -164,9 +180,6 @@ void MainWindow::verificarChoques()
         contador1++;
     }
 }
-
-
-
 
 void MainWindow::nivel1()
 {
@@ -193,8 +206,6 @@ void MainWindow::nivel1()
     //montania
     scene->addItem(new Paisaje(500,585,6));
 
-
-
     //timer enemigo
     timer_enemigo = new QTimer();
     connect(timer_enemigo, SIGNAL(timeout()), this, SLOT(MoverEnemigo()));
@@ -215,7 +226,102 @@ void MainWindow::nivel1()
     connect(timer_choques, SIGNAL(timeout()), this, SLOT(verificarChoques()));
     timer_choques->start(100);
 
-    jefe1 = new Jefe(800, 200, 1);
+    //Add Jefe
+    timer_jefe1 = new QTimer();
+    connect(timer_jefe1, SIGNAL(timeout()), this, SLOT(invocarJefe1()));
+    timer_jefe1->start(6000);
+    //add disparos del jefe
+
+    timer_jefeDisparo = new QTimer();
+    connect(timer_jefeDisparo, SIGNAL(timeout()), this, SLOT(DisparoJefe()));
+    timer_jefeDisparo->start(2000);
+}
+
+//Jefe 1
+void MainWindow::invocarJefe1()
+{
+    jefe1 = new Jefe(800, 300, 1);
     scene->addItem(jefe1);
+    timer_jefe1->stop();
+
+    timer_jefeVsMisiles = new QTimer();
+    connect(timer_jefeVsMisiles, SIGNAL(timeout()), this, SLOT(verificarChoquesVsJefe()));
+    timer_jefeVsMisiles->start(200);
+
+    //add proyectiles al jefe
+    timer_proyectiles = new QTimer();
+    connect(timer_proyectiles, SIGNAL(timeout()), this, SLOT(Mover2()));
+
 
 }
+
+void MainWindow::verificarChoquesVsJefe()
+{
+    //Misiles vs Jefe
+    if(misiles.size() > 0){
+        for(auto itt = misiles.begin(); itt != misiles.end(); itt++){
+            if(jefe1->collidesWithItem(*itt)){
+                scene->removeItem(*itt);
+                misiles.erase(itt);
+
+                jefe1->setSalud( jefe1->getSalud() - 5);
+                jugador->incrementar_puntos(5);
+
+                if(jefe1->getSalud() <= 0){
+                    scene->removeItem(jefe1);
+                    timer_jefeVsMisiles->stop();
+                    timer_jefeDisparo->stop();
+                }
+                break;
+            }
+        }
+    }
+
+    if(proyectiles.size() > 0){
+        for(auto it = proyectiles.begin(); it != proyectiles.end(); it++){
+            if(humanos->collidesWithItem(*it)){
+                scene->removeItem(*it);
+                proyectiles.erase(it);
+
+                jugador->setVidas(jugador->getVidas()-1);
+                jugador->eliminar_Corazon();
+                break;
+            }
+        }
+    }
+
+
+
+
+    if(coord >= 80) coord = -80;
+    if(coord > 0) jefe1->MoveUp();
+    if(coord < 0) jefe1->MoveDown();
+
+    coord++;
+}
+
+void MainWindow::DisparoJefe()
+{
+    //Generar proyectiles
+    double x= jefe1->getPosx()-30;
+    double y= jefe1->getPosy()-30;
+    double v= rand() %100 + 80;
+    double a= rand() %180 + 120;
+    a = (a*3.14159)/180; //angulo en radianes
+
+    proyectiles.push_back(new Misil(x,y,v,a));
+    scene->addItem(proyectiles.back());
+    timer_proyectiles->start(5);
+
+    //Generar proyectiles
+    x= jefe1->getPosx()-30;
+    y= jefe1->getPosy()-30;
+    v= rand() %100 + 80;
+    a= rand() %180 + 120;
+    a = (a*3.14159)/180; //angulo en radianes
+
+    proyectiles.push_back(new Misil(x,y,v,a));
+    scene->addItem(proyectiles.back());
+    timer_proyectiles->start(5);
+}
+
