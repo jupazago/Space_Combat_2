@@ -12,6 +12,7 @@ class Humanidad : public QObject, public QGraphicsItem
     int posx;
     int posy;
     int vel;
+    bool existe;
 public:
     explicit Humanidad(QObject *parent = nullptr);
 
@@ -35,6 +36,9 @@ public:
 
     int getVel() const;
     void setVel(int value);
+
+    bool getExiste() const;
+    void setExiste(bool value);
 
 signals:
 

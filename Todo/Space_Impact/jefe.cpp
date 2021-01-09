@@ -57,13 +57,13 @@ Jefe::Jefe(int posx_, int posy_, int nivel, QObject *parent) : QObject(parent)
         case 1: pixmap = new QPixmap(":/recursos/jefe1.png");
         break;
 
-        case 2: pixmap = new QPixmap(":/recursos/amongus2.png");
+        case 2: pixmap = new QPixmap(":/recursos/jefe1.png");
         break;
 
-        case 3: pixmap = new QPixmap(":/recursos/amongus2.png");
+        case 3: pixmap = new QPixmap(":/recursos/jefe1.png");
         break;
 
-        default: pixmap = new QPixmap(":/recursos/amongus2.png");
+        default: pixmap = new QPixmap(":/recursos/jefe1.png");
     }
 
 

@@ -59,6 +59,8 @@ public:
 
     Puntuacion *crear_puntos();
     void incrementar_puntos(int valor);
+
+    void subir_nivel();
 };
 
 #endif // JUGADOR_H

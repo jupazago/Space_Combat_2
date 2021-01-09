@@ -16,8 +16,6 @@ MainWindow::MainWindow(QWidget *parent)
     alto = 590;
 
     scene = new QGraphicsScene(x,y,ancho,alto);
-    scene->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba.jpg"));
-    ui->graphicsView->setScene(scene);
 
     //add jugador
     jugador = new Jugador("jupazago", 1998);
@@ -40,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     nivel1();
+    jugador->subir_nivel();
 }
 
 MainWindow::~MainWindow()
@@ -58,7 +57,6 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
                 humanos->MoveDown();
             }
         }
-
     }else if(evento->key()==Qt::Key_S){
         humanos->MoveDown();
 
@@ -68,11 +66,9 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
                 humanos->MoveUp();
             }
         }
-
-
     }
 
-    if(evento->key()==Qt::Key_1){
+    if(evento->key()==Qt::Key_1 && humanos->getExiste() == true){
         double x= humanos->getPosx()+30;
         double y= humanos->getPosy()+30;
         double v= 100;
@@ -84,7 +80,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         timer_misiles->start(5);
     }
 
-    if(evento->key()==Qt::Key_2){
+    if(evento->key()==Qt::Key_2 && humanos->getExiste() == true){
         double x= humanos->getPosx()+30;
         double y= humanos->getPosy()+30;
         double v= 35;
@@ -114,6 +110,7 @@ void MainWindow::Mover()
     }
 }
 
+//Mover proyectiles
 void MainWindow::Mover2()
 {
     if(proyectiles.size() > 0){
@@ -183,12 +180,20 @@ void MainWindow::verificarChoques()
 
 void MainWindow::nivel1()
 {
+/*
+    scene->setBackgroundBrush(QPixmap(":/recursos/lvl1.png"));
+    ui->graphicsView->setScene(scene);
+    */
+    scene->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba.jpg"));
+    ui->graphicsView->setScene(scene);
+    Sleep(2000);
 
-    //add enemigos lvl 1
+
+    //add enemigos por lvl
     int ejey;
-    for (int i=500; i<10000; i+=500) {
+    for (int i=1000; i<10000; i+=500) {
         ejey = rand() %400 + 100;
-        enemigos.push_back(new Enemigo(i, ejey, 1));
+        enemigos.push_back(new Enemigo(i, ejey, jugador->getNivel()));
         scene->addItem(enemigos.back());
     }
 
@@ -240,7 +245,10 @@ void MainWindow::nivel1()
 //Jefe 1
 void MainWindow::invocarJefe1()
 {
-    jefe1 = new Jefe(800, 300, 1);
+
+
+
+    jefe1 = new Jefe(800, 300, jugador->getNivel());
     scene->addItem(jefe1);
     timer_jefe1->stop();
 
@@ -268,9 +276,10 @@ void MainWindow::verificarChoquesVsJefe()
                 jugador->incrementar_puntos(5);
 
                 if(jefe1->getSalud() <= 0){
-                    scene->removeItem(jefe1);
-                    timer_jefeVsMisiles->stop();
-                    timer_jefeDisparo->stop();
+                    //scene->removeItem(jefe1);
+                    //timer_jefeVsMisiles->stop();
+                    //timer_jefeDisparo->stop();
+                    Limpiar_y_Detener();
                 }
                 break;
             }
@@ -289,9 +298,6 @@ void MainWindow::verificarChoquesVsJefe()
             }
         }
     }
-
-
-
 
     if(coord >= 80) coord = -80;
     if(coord > 0) jefe1->MoveUp();
@@ -323,5 +329,33 @@ void MainWindow::DisparoJefe()
     proyectiles.push_back(new Misil(x,y,v,a));
     scene->addItem(proyectiles.back());
     timer_proyectiles->start(5);
+}
+
+void MainWindow::Limpiar_y_Detener(){
+
+    //Limpiar listas
+    misiles.clear();
+    proyectiles.clear();
+    enemigos.clear();
+    nubes.clear();
+
+    //detener Timers
+    timer_misiles->stop();
+    timer_proyectiles->stop();
+    timer_choques->stop();
+    timer_enemigo->stop();
+    timer_jefe1->stop();
+    timer_jefeVsMisiles->stop();
+    timer_jefeDisparo->stop();
+
+
+    //limpiar
+    scene->removeItem(humanos);
+    humanos->setExiste(false);
+    scene->removeItem(jefe1);
+
+    //Limpiar escena
+    scene->clear();
+
 }
 

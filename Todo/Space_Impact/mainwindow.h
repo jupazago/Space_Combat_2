@@ -20,6 +20,7 @@
 #include <QPainter>
 #include <QGraphicsItem>
 #include <QRectF>
+#include <windows.h>
 #include <QDesktopWidget>
 #include <stdlib.h>     /* srand, rand */
 
@@ -39,12 +40,14 @@ public:
 private slots:
     void nivel1();
 
+    void Limpiar_y_Detener();
+
     void invocarJefe1();
     void verificarChoques();
     void verificarChoquesVsJefe();
     void DisparoJefe();
-    void Mover();
 
+    void Mover();
     void Mover2();
 
     void MoverEnemigo();

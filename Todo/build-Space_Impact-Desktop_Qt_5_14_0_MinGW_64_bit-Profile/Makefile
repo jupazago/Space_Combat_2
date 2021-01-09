@@ -520,6 +520,8 @@ compiler_rcc_clean:
 qrc_recursos.cpp: ../Space_Impact/recursos.qrc \
 		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/bin/rcc.exe \
 		../Space_Impact/recursos/jefe1.png \
+		../Space_Impact/recursos/lvl1.png \
+		../Space_Impact/recursos/lvl2.png \
 		../Space_Impact/recursos/fondo_prueba.jpg \
 		../Space_Impact/recursos/enemigo1.png \
 		../Space_Impact/recursos/bola.png \

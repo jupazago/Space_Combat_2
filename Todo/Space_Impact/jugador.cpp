@@ -309,5 +309,10 @@ void Jugador::incrementar_puntos(int valor)
     puntuacion->incrementar(puntos);
 }
 
+void Jugador::subir_nivel()
+{
+    nivel++;
+}
+
 
 

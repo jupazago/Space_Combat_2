@@ -30,6 +30,16 @@ void Humanidad::setVel(int value)
     vel = value;
 }
 
+bool Humanidad::getExiste() const
+{
+    return existe;
+}
+
+void Humanidad::setExiste(bool value)
+{
+    existe = value;
+}
+
 Humanidad::Humanidad(QObject *parent) : QObject(parent)
 {
 
@@ -39,6 +49,7 @@ Humanidad::Humanidad(QObject *parent) : QObject(parent)
     posx = 40;
     posy = 300;
     vel = 5;
+    existe = true;
     setPos(posx, posy);
 
     pixmap = new QPixmap(":/recursos/amongus.png");
