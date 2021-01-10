@@ -52,18 +52,26 @@ Enemigo::Enemigo(int posx_, int posy_, int nivel, QObject *parent) : QObject(par
     salud = nivel;
     setPos(posx, posy);
 
+    pixmap = new QPixmap(":/recursos/enemigo1.png");
+
     switch(nivel)
     {
-        case 1: pixmap = new QPixmap(":/recursos/enemigo1.png");
+        case 1: filas=0;
         break;
 
-        case 2: pixmap = new QPixmap(":/recursos/amongus2.png");
+        case 2: filas=100;
         break;
 
-        case 3: pixmap = new QPixmap(":/recursos/amongus2.png");
+        case 3: filas=200;
         break;
 
-        default: pixmap = new QPixmap(":/recursos/amongus2.png");
+        case 4: filas=300;
+        break;
+
+        case 5: filas=400;
+        break;
+
+        default: filas=100;
     }
 
 
@@ -80,7 +88,7 @@ void Enemigo::Actualizacion()
 {
     columnas += 160;
     if(columnas >= 960){
-        columnas =0;
+        columnas = 0;
     }
     this->update(-ancho/2,-alto/2,ancho,alto);
 }
@@ -92,7 +100,7 @@ QRectF Enemigo::boundingRect() const
 
 void Enemigo::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawPixmap(-ancho/2,-alto/2,*pixmap,columnas,0,ancho,alto);
+    painter->drawPixmap(-ancho/2,-alto/2,*pixmap,columnas,filas,ancho,alto);
 }
 
 void Enemigo::Move()

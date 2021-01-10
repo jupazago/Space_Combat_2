@@ -525,6 +525,7 @@ qrc_recursos.cpp: ../Space_Impact/recursos.qrc \
 		../Space_Impact/recursos/fondo_prueba.jpg \
 		../Space_Impact/recursos/enemigo1.png \
 		../Space_Impact/recursos/bola.png \
+		../Space_Impact/recursos/niveles.jpg \
 		../Space_Impact/recursos/paisaje1.png \
 		../Space_Impact/recursos/fondo_lvl1.png \
 		../Space_Impact/recursos/paisaje2.png \

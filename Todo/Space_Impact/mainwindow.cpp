@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     jugador = new Jugador("jupazago", 1998);
     scene->addItem(jugador->graficar_vida());   //corazones
     scene->addItem(jugador->crear_puntos());    //puntuacion
-
+    jugador->subir_nivel();
     //Pared
     //                   x-y-ancho-alto
     paredes.push_back(new Pared(-1,100,1000,10));
@@ -38,7 +38,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     nivel1();
-    jugador->subir_nivel();
 }
 
 MainWindow::~MainWindow()
@@ -180,14 +179,9 @@ void MainWindow::verificarChoques()
 
 void MainWindow::nivel1()
 {
-/*
-    scene->setBackgroundBrush(QPixmap(":/recursos/lvl1.png"));
-    ui->graphicsView->setScene(scene);
-    */
+
     scene->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba.jpg"));
     ui->graphicsView->setScene(scene);
-    Sleep(2000);
-
 
     //add enemigos por lvl
     int ejey;
@@ -239,7 +233,7 @@ void MainWindow::nivel1()
 
     timer_jefeDisparo = new QTimer();
     connect(timer_jefeDisparo, SIGNAL(timeout()), this, SLOT(DisparoJefe()));
-    timer_jefeDisparo->start(2000);
+    timer_jefeDisparo->start(4000);
 }
 
 //Jefe 1
@@ -254,7 +248,7 @@ void MainWindow::invocarJefe1()
 
     timer_jefeVsMisiles = new QTimer();
     connect(timer_jefeVsMisiles, SIGNAL(timeout()), this, SLOT(verificarChoquesVsJefe()));
-    timer_jefeVsMisiles->start(200);
+    timer_jefeVsMisiles->start(50);
 
     //add proyectiles al jefe
     timer_proyectiles = new QTimer();
@@ -275,10 +269,8 @@ void MainWindow::verificarChoquesVsJefe()
                 jefe1->setSalud( jefe1->getSalud() - 5);
                 jugador->incrementar_puntos(5);
 
+                //Si muere el jefe
                 if(jefe1->getSalud() <= 0){
-                    //scene->removeItem(jefe1);
-                    //timer_jefeVsMisiles->stop();
-                    //timer_jefeDisparo->stop();
                     Limpiar_y_Detener();
                 }
                 break;
@@ -317,7 +309,7 @@ void MainWindow::DisparoJefe()
 
     proyectiles.push_back(new Misil(x,y,v,a));
     scene->addItem(proyectiles.back());
-    timer_proyectiles->start(5);
+    timer_proyectiles->start(10);
 
     //Generar proyectiles
     x= jefe1->getPosx()-30;
@@ -328,16 +320,10 @@ void MainWindow::DisparoJefe()
 
     proyectiles.push_back(new Misil(x,y,v,a));
     scene->addItem(proyectiles.back());
-    timer_proyectiles->start(5);
+    timer_proyectiles->start(10);
 }
 
 void MainWindow::Limpiar_y_Detener(){
-
-    //Limpiar listas
-    misiles.clear();
-    proyectiles.clear();
-    enemigos.clear();
-    nubes.clear();
 
     //detener Timers
     timer_misiles->stop();
@@ -348,14 +334,50 @@ void MainWindow::Limpiar_y_Detener(){
     timer_jefeVsMisiles->stop();
     timer_jefeDisparo->stop();
 
+    //remover objetos de listas
+    if(misiles.size() > 0){
+        for (auto i=misiles.begin(); i<misiles.end(); i++) {
+            scene->removeItem(*i);
+            misiles.erase(i);
+        }
+    }
+    misiles.clear();
+
+    if(proyectiles.size() > 0){
+        for (auto i=proyectiles.begin(); i<proyectiles.end(); i++) {
+            scene->removeItem(*i);
+            proyectiles.erase(i);
+        }
+    }
+    proyectiles.clear();
+
+    if(enemigos.size() > 0){
+        for (auto i=enemigos.begin(); i<enemigos.end(); i++) {
+            scene->removeItem(*i);
+            enemigos.erase(i);
+        }
+    }
+    enemigos.clear();
+
+    if(nubes.size() > 0){
+        for (auto i=nubes.begin(); i<nubes.end(); i++) {
+            scene->removeItem(*i);
+            nubes.erase(i);
+        }
+    }
+    nubes.clear();
 
     //limpiar
     scene->removeItem(humanos);
     humanos->setExiste(false);
     scene->removeItem(jefe1);
 
-    //Limpiar escena
+    //subo nivel
+    jugador->subir_nivel();
     scene->clear();
 
-}
+    if(jugador->getNivel() <= 5){
+        MainWindow w;
+    }
 
+}
