@@ -15,13 +15,18 @@ MainWindow::MainWindow(QWidget *parent)
     ancho = 995;
     alto = 590;
 
+    timer_enemigo = new QTimer();
+    timer_misiles = new QTimer();
+    timer_choques = new QTimer();
+    timer_jefe1 = new QTimer();
+    timer_jefeDisparo = new QTimer();
+
     scene = new QGraphicsScene(x,y,ancho,alto);
 
     //add jugador
     jugador = new Jugador("jupazago", 1998);
     scene->addItem(jugador->graficar_vida());   //corazones
     scene->addItem(jugador->crear_puntos());    //puntuacion
-    jugador->subir_nivel();
     //Pared
     //                   x-y-ancho-alto
     paredes.push_back(new Pared(-1,100,1000,10));
@@ -36,8 +41,11 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(eliminacion_enemiga);
 
 
+    //Add humanidad
+    humanos = new Humanidad();
 
-    nivel1();
+
+    nivel();
 }
 
 MainWindow::~MainWindow()
@@ -177,70 +185,11 @@ void MainWindow::verificarChoques()
     }
 }
 
-void MainWindow::nivel1()
-{
 
-    scene->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba.jpg"));
-    ui->graphicsView->setScene(scene);
-
-    //add enemigos por lvl
-    int ejey;
-    for (int i=1000; i<10000; i+=500) {
-        ejey = rand() %400 + 100;
-        enemigos.push_back(new Enemigo(i, ejey, jugador->getNivel()));
-        scene->addItem(enemigos.back());
-    }
-
-    //add nubes
-    int ejex, nube=1;
-    ejey=0;
-    for (int i=0; i<100; i++) {
-        ejex = rand() %10000 + 1;
-        ejey = rand() %600 + 1;
-        nubes.push_back(new Paisaje(ejex, ejey, nube));
-        scene->addItem(nubes.back());
-        nube++;
-        if(nube>5) nube = 1;
-    }
-    //montania
-    scene->addItem(new Paisaje(500,585,6));
-
-    //timer enemigo
-    timer_enemigo = new QTimer();
-    connect(timer_enemigo, SIGNAL(timeout()), this, SLOT(MoverEnemigo()));
-    timer_enemigo->start(20);
-
-
-    //add misiles humanidad
-    timer_misiles = new QTimer();
-    connect(timer_misiles, SIGNAL(timeout()), this, SLOT(Mover()));
-
-    //Add humanidad
-    humanos = new Humanidad();
-    scene->addItem(humanos);
-
-
-    //add verificar choques
-    timer_choques = new QTimer();
-    connect(timer_choques, SIGNAL(timeout()), this, SLOT(verificarChoques()));
-    timer_choques->start(100);
-
-    //Add Jefe
-    timer_jefe1 = new QTimer();
-    connect(timer_jefe1, SIGNAL(timeout()), this, SLOT(invocarJefe1()));
-    timer_jefe1->start(6000);
-    //add disparos del jefe
-
-    timer_jefeDisparo = new QTimer();
-    connect(timer_jefeDisparo, SIGNAL(timeout()), this, SLOT(DisparoJefe()));
-    timer_jefeDisparo->start(4000);
-}
 
 //Jefe 1
 void MainWindow::invocarJefe1()
 {
-
-
 
     jefe1 = new Jefe(800, 300, jugador->getNivel());
     scene->addItem(jefe1);
@@ -300,27 +249,18 @@ void MainWindow::verificarChoquesVsJefe()
 
 void MainWindow::DisparoJefe()
 {
-    //Generar proyectiles
-    double x= jefe1->getPosx()-30;
-    double y= jefe1->getPosy()-30;
-    double v= rand() %100 + 80;
-    double a= rand() %180 + 120;
-    a = (a*3.14159)/180; //angulo en radianes
+    for (int i=0; i<jugador->getNivel(); i++) {
+        //Generar proyectiles
+        double x= jefe1->getPosx()-30;
+        double y= jefe1->getPosy()-30;
+        double v= rand() %100 + 80;
+        double a= rand() %180 + 120;
+        a = (a*3.14159)/180; //angulo en radianes
 
-    proyectiles.push_back(new Misil(x,y,v,a));
-    scene->addItem(proyectiles.back());
-    timer_proyectiles->start(10);
-
-    //Generar proyectiles
-    x= jefe1->getPosx()-30;
-    y= jefe1->getPosy()-30;
-    v= rand() %100 + 80;
-    a= rand() %180 + 120;
-    a = (a*3.14159)/180; //angulo en radianes
-
-    proyectiles.push_back(new Misil(x,y,v,a));
-    scene->addItem(proyectiles.back());
-    timer_proyectiles->start(10);
+        proyectiles.push_back(new Misil(x,y,v,a));
+        scene->addItem(proyectiles.back());
+        timer_proyectiles->start(10);
+    }
 }
 
 void MainWindow::Limpiar_y_Detener(){
@@ -372,12 +312,67 @@ void MainWindow::Limpiar_y_Detener(){
     humanos->setExiste(false);
     scene->removeItem(jefe1);
 
+
+
     //subo nivel
     jugador->subir_nivel();
-    scene->clear();
+    //scene->clear();
 
     if(jugador->getNivel() <= 5){
-        MainWindow w;
+        nivel();
     }
 
+}
+
+void MainWindow::nivel()
+{
+    humanos->setExiste(true);
+
+    scene->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba.jpg"));
+    ui->graphicsView->setScene(scene);
+
+    //add enemigos por lvl
+    int ejey;
+    for (int i=1000; i<10000; i+=500) {
+        ejey = rand() %400 + 100;
+        enemigos.push_back(new Enemigo(i, ejey, jugador->getNivel()));
+        scene->addItem(enemigos.back());
+    }
+
+    //add nubes
+    int ejex, nube=1;
+    ejey=0;
+    for (int i=0; i<100; i++) {
+        ejex = rand() %10000 + 1;
+        ejey = rand() %600 + 1;
+        nubes.push_back(new Paisaje(ejex, ejey, nube));
+        scene->addItem(nubes.back());
+        nube++;
+        if(nube>5) nube = 1;
+    }
+    //montania
+    scene->addItem(new Paisaje(500,585,6));
+
+    //timer enemigo
+    connect(timer_enemigo, SIGNAL(timeout()), this, SLOT(MoverEnemigo()));
+    timer_enemigo->start(20);
+
+
+    //add misiles humanidad
+    connect(timer_misiles, SIGNAL(timeout()), this, SLOT(Mover()));
+
+    //humanos en escena
+    scene->addItem(humanos);
+
+    //add verificar choques
+    connect(timer_choques, SIGNAL(timeout()), this, SLOT(verificarChoques()));
+    timer_choques->start(100);
+
+    //Add Jefe
+    connect(timer_jefe1, SIGNAL(timeout()), this, SLOT(invocarJefe1()));
+    timer_jefe1->start(6000);
+
+    //add disparos del jefe
+    connect(timer_jefeDisparo, SIGNAL(timeout()), this, SLOT(DisparoJefe()));
+    timer_jefeDisparo->start(6000);
 }

@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
     QByteArrayData data[12];
-    char stringdata0[141];
+    char stringdata0[140];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,20 +33,20 @@ struct qt_meta_stringdata_MainWindow_t {
 static const qt_meta_stringdata_MainWindow_t qt_meta_stringdata_MainWindow = {
     {
 QT_MOC_LITERAL(0, 0, 10), // "MainWindow"
-QT_MOC_LITERAL(1, 11, 6), // "nivel1"
-QT_MOC_LITERAL(2, 18, 0), // ""
-QT_MOC_LITERAL(3, 19, 17), // "Limpiar_y_Detener"
-QT_MOC_LITERAL(4, 37, 12), // "invocarJefe1"
-QT_MOC_LITERAL(5, 50, 16), // "verificarChoques"
-QT_MOC_LITERAL(6, 67, 22), // "verificarChoquesVsJefe"
-QT_MOC_LITERAL(7, 90, 11), // "DisparoJefe"
-QT_MOC_LITERAL(8, 102, 5), // "Mover"
-QT_MOC_LITERAL(9, 108, 6), // "Mover2"
-QT_MOC_LITERAL(10, 115, 12), // "MoverEnemigo"
-QT_MOC_LITERAL(11, 128, 12) // "MoverPaisaje"
+QT_MOC_LITERAL(1, 11, 5), // "nivel"
+QT_MOC_LITERAL(2, 17, 0), // ""
+QT_MOC_LITERAL(3, 18, 17), // "Limpiar_y_Detener"
+QT_MOC_LITERAL(4, 36, 12), // "invocarJefe1"
+QT_MOC_LITERAL(5, 49, 16), // "verificarChoques"
+QT_MOC_LITERAL(6, 66, 22), // "verificarChoquesVsJefe"
+QT_MOC_LITERAL(7, 89, 11), // "DisparoJefe"
+QT_MOC_LITERAL(8, 101, 5), // "Mover"
+QT_MOC_LITERAL(9, 107, 6), // "Mover2"
+QT_MOC_LITERAL(10, 114, 12), // "MoverEnemigo"
+QT_MOC_LITERAL(11, 127, 12) // "MoverPaisaje"
 
     },
-    "MainWindow\0nivel1\0\0Limpiar_y_Detener\0"
+    "MainWindow\0nivel\0\0Limpiar_y_Detener\0"
     "invocarJefe1\0verificarChoques\0"
     "verificarChoquesVsJefe\0DisparoJefe\0"
     "Mover\0Mover2\0MoverEnemigo\0MoverPaisaje"
@@ -99,7 +99,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         auto *_t = static_cast<MainWindow *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->nivel1(); break;
+        case 0: _t->nivel(); break;
         case 1: _t->Limpiar_y_Detener(); break;
         case 2: _t->invocarJefe1(); break;
         case 3: _t->verificarChoques(); break;

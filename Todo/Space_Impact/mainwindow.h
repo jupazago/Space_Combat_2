@@ -16,6 +16,7 @@
 #include <string>
 #include <QList>
 #include <QTimer>
+#include <QDebug>
 #include <QKeyEvent>
 #include <QPainter>
 #include <QGraphicsItem>
@@ -38,7 +39,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void nivel1();
+    void nivel();
 
     void Limpiar_y_Detener();
 

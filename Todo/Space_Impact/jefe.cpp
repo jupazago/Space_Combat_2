@@ -52,19 +52,29 @@ Jefe::Jefe(int posx_, int posy_, int nivel, QObject *parent) : QObject(parent)
     salud = 100*nivel;
     setPos(posx, posy);
 
+    pixmap = new QPixmap(":/recursos/jefe1.png");
+
     switch(nivel)
     {
-        case 1: pixmap = new QPixmap(":/recursos/jefe1.png");
+        case 1: filas=0;
         break;
 
-        case 2: pixmap = new QPixmap(":/recursos/jefe1.png");
+        case 2: filas=300;
         break;
 
-        case 3: pixmap = new QPixmap(":/recursos/jefe1.png");
+        case 3: filas=600;
         break;
 
-        default: pixmap = new QPixmap(":/recursos/jefe1.png");
+        case 4: filas=900;
+        break;
+
+        case 5: filas=1200;
+        break;
+
+        default: filas=100;
     }
+
+
 
 
 
@@ -92,7 +102,7 @@ QRectF Jefe::boundingRect() const
 
 void Jefe::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawPixmap(-ancho/2,-alto/2,*pixmap,columnas,0,ancho,alto);
+    painter->drawPixmap(-ancho/2,-alto/2,*pixmap,columnas,filas,ancho,alto);
 }
 
 void Jefe::MoveUp()

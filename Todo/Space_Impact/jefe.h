@@ -17,7 +17,6 @@ class Jefe : public QObject, public QGraphicsItem
 
 public:
     explicit Jefe(int posx_, int posy_n, int nivel, QObject *parent = nullptr);
-
     QTimer * timer;
     QPixmap *pixmap;
 
