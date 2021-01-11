@@ -43,7 +43,7 @@ private slots:
 
     void Limpiar_y_Detener();
 
-    void invocarJefe1();
+    void invocarJefe();
     void verificarChoques();
     void verificarChoquesVsJefe();
     void DisparoJefe();
@@ -84,10 +84,10 @@ private:
     QList<Enemigo*> enemigos;
 
     //jefe
-    QTimer *timer_jefe1;
+    QTimer *timer_jefe;
     QTimer *timer_jefeVsMisiles;
     QTimer *timer_jefeDisparo;
-    Jefe *jefe1;
+    Jefe *jefe;
     int coord = 50;
 
     //pared

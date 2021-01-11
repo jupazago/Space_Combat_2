@@ -15,11 +15,11 @@ MainWindow::MainWindow(QWidget *parent)
     ancho = 995;
     alto = 590;
 
-    timer_enemigo = new QTimer();
-    timer_misiles = new QTimer();
-    timer_choques = new QTimer();
-    timer_jefe1 = new QTimer();
-    timer_jefeDisparo = new QTimer();
+    timer_enemigo       = new QTimer();
+    timer_misiles       = new QTimer();
+    timer_choques       = new QTimer();
+    timer_jefe          = new QTimer();
+    timer_jefeDisparo   = new QTimer();
 
     scene = new QGraphicsScene(x,y,ancho,alto);
 
@@ -44,6 +44,23 @@ MainWindow::MainWindow(QWidget *parent)
     //Add humanidad
     humanos = new Humanidad();
 
+
+
+    //timer enemigo
+    connect(timer_enemigo, SIGNAL(timeout()), this, SLOT(MoverEnemigo()));
+
+    //add misiles humanidad
+    connect(timer_misiles, SIGNAL(timeout()), this, SLOT(Mover()));
+
+    //add verificar choques
+    connect(timer_choques, SIGNAL(timeout()), this, SLOT(verificarChoques()));
+
+
+    //Add Jefe
+    connect(timer_jefe, SIGNAL(timeout()), this, SLOT(invocarJefe1()));
+
+    //add disparos del jefe
+    connect(timer_jefeDisparo, SIGNAL(timeout()), this, SLOT(DisparoJefe()));
 
     nivel();
 }
@@ -188,12 +205,12 @@ void MainWindow::verificarChoques()
 
 
 //Jefe 1
-void MainWindow::invocarJefe1()
+void MainWindow::invocarJefe()
 {
 
-    jefe1 = new Jefe(800, 300, jugador->getNivel());
-    scene->addItem(jefe1);
-    timer_jefe1->stop();
+    jefe = new Jefe(800, 300, jugador->getNivel());
+    scene->addItem(jefe);
+    timer_jefe->stop();
 
     timer_jefeVsMisiles = new QTimer();
     connect(timer_jefeVsMisiles, SIGNAL(timeout()), this, SLOT(verificarChoquesVsJefe()));
@@ -211,15 +228,15 @@ void MainWindow::verificarChoquesVsJefe()
     //Misiles vs Jefe
     if(misiles.size() > 0){
         for(auto itt = misiles.begin(); itt != misiles.end(); itt++){
-            if(jefe1->collidesWithItem(*itt)){
+            if(jefe->collidesWithItem(*itt)){
                 scene->removeItem(*itt);
                 misiles.erase(itt);
 
-                jefe1->setSalud( jefe1->getSalud() - 5);
+                jefe->setSalud( jefe->getSalud() - 5);
                 jugador->incrementar_puntos(5);
 
                 //Si muere el jefe
-                if(jefe1->getSalud() <= 0){
+                if(jefe->getSalud() <= 0){
                     Limpiar_y_Detener();
                 }
                 break;
@@ -241,8 +258,8 @@ void MainWindow::verificarChoquesVsJefe()
     }
 
     if(coord >= 80) coord = -80;
-    if(coord > 0) jefe1->MoveUp();
-    if(coord < 0) jefe1->MoveDown();
+    if(coord > 0) jefe->MoveUp();
+    if(coord < 0) jefe->MoveDown();
 
     coord++;
 }
@@ -251,8 +268,8 @@ void MainWindow::DisparoJefe()
 {
     for (int i=0; i<jugador->getNivel(); i++) {
         //Generar proyectiles
-        double x= jefe1->getPosx()-30;
-        double y= jefe1->getPosy()-30;
+        double x= jefe->getPosx()-30;
+        double y= jefe->getPosy()-30;
         double v= rand() %100 + 80;
         double a= rand() %180 + 120;
         a = (a*3.14159)/180; //angulo en radianes
@@ -270,7 +287,7 @@ void MainWindow::Limpiar_y_Detener(){
     timer_proyectiles->stop();
     timer_choques->stop();
     timer_enemigo->stop();
-    timer_jefe1->stop();
+    timer_jefe->stop();
     timer_jefeVsMisiles->stop();
     timer_jefeDisparo->stop();
 
@@ -310,7 +327,7 @@ void MainWindow::Limpiar_y_Detener(){
     //limpiar
     scene->removeItem(humanos);
     humanos->setExiste(false);
-    scene->removeItem(jefe1);
+    scene->removeItem(jefe);
 
 
 
@@ -354,25 +371,17 @@ void MainWindow::nivel()
     scene->addItem(new Paisaje(500,585,6));
 
     //timer enemigo
-    connect(timer_enemigo, SIGNAL(timeout()), this, SLOT(MoverEnemigo()));
     timer_enemigo->start(20);
-
-
-    //add misiles humanidad
-    connect(timer_misiles, SIGNAL(timeout()), this, SLOT(Mover()));
 
     //humanos en escena
     scene->addItem(humanos);
 
     //add verificar choques
-    connect(timer_choques, SIGNAL(timeout()), this, SLOT(verificarChoques()));
     timer_choques->start(100);
 
     //Add Jefe
-    connect(timer_jefe1, SIGNAL(timeout()), this, SLOT(invocarJefe1()));
-    timer_jefe1->start(6000);
+    timer_jefe->start(6000);
 
     //add disparos del jefe
-    connect(timer_jefeDisparo, SIGNAL(timeout()), this, SLOT(DisparoJefe()));
     timer_jefeDisparo->start(6000);
 }
