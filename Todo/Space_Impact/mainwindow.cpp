@@ -44,8 +44,6 @@ MainWindow::MainWindow(QWidget *parent)
     //Add humanidad
     humanos = new Humanidad();
 
-
-
     //timer enemigo
     connect(timer_enemigo, SIGNAL(timeout()), this, SLOT(MoverEnemigo()));
 
@@ -55,9 +53,8 @@ MainWindow::MainWindow(QWidget *parent)
     //add verificar choques
     connect(timer_choques, SIGNAL(timeout()), this, SLOT(verificarChoques()));
 
-
     //Add Jefe
-    connect(timer_jefe, SIGNAL(timeout()), this, SLOT(invocarJefe1()));
+    connect(timer_jefe, SIGNAL(timeout()), this, SLOT(invocarJefe()));
 
     //add disparos del jefe
     connect(timer_jefeDisparo, SIGNAL(timeout()), this, SLOT(DisparoJefe()));
@@ -72,7 +69,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
+    //Si presiono la tecla W
     if(evento->key()==Qt::Key_W){
+        //Muevo mi humano
         humanos->MoveUp();
 
         //choque con paredes
@@ -81,7 +80,10 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
                 humanos->MoveDown();
             }
         }
+
+        //Si presiono la tecla S
     }else if(evento->key()==Qt::Key_S){
+        //Muevo mi humano
         humanos->MoveDown();
 
         //choque con paredes
@@ -91,6 +93,10 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
             }
         }
     }
+
+    //Si me encuentro habilitado para disparar
+    //Disparo con 1 y 2
+
 
     if(evento->key()==Qt::Key_1 && humanos->getExiste() == true){
         double x= humanos->getPosx()+30;
@@ -122,9 +128,13 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 void MainWindow::Mover()
 {
     if(misiles.size() > 0){
+        //si misiles es >0, los recorro y los muevo
         QList<Misil*>::iterator it;
         for(it = misiles.begin();it != misiles.end(); it++){
            (*it)->ActualizarPosicion();
+
+            //existe un limite a la derecha que elimina los misiles humanos
+            //cuando ya no se ven y libera espacio
             if((*it)->collidesWithItem(eliminacion_humana)){
                 scene->removeItem(*it);
                 misiles.erase(it);
@@ -138,6 +148,7 @@ void MainWindow::Mover()
 void MainWindow::Mover2()
 {
     if(proyectiles.size() > 0){
+        //si proyectiles es > 0, los recorro y los muevo
         QList<Misil*>::iterator itt;
         for(itt = proyectiles.begin();itt != proyectiles.end(); itt++){
            (*itt)->ActualizarPosicion();
@@ -150,7 +161,12 @@ void MainWindow::MoverEnemigo()
 {
     int contador = 0;
     for(auto it = enemigos.begin(); it != enemigos.end(); it++){
+        //muevo enemigo
         (*it)->Move();
+
+        //si coliciona con la pared invisible a la izquierda
+        //desapaece de la escena, limpia de la lista
+        // y eliminamos una vida de nuestro humano
         if((*it)->collidesWithItem(eliminacion_enemiga)){
             scene->removeItem(*it);
             enemigos.erase(it);
@@ -160,12 +176,15 @@ void MainWindow::MoverEnemigo()
         }
         contador++;
     }
+
+    //tambien movemos el paisaje, las nubes
     MoverPaisaje();
 }
 
 //Mover Paisaje
 void MainWindow::MoverPaisaje()
 {
+    //movemos todas nuestras nubes
     for(auto it = nubes.begin(); it != nubes.end(); it++){
         (*it)->Move();
     }
@@ -180,11 +199,14 @@ void MainWindow::verificarChoques()
     int contador2 = 0;
     for(auto it = enemigos.begin(); it != enemigos.end(); it++){
         for(auto itt = misiles.begin(); itt != misiles.end(); itt++){
+            //si el radio de choque esta dentro del rango
+            //distancia entre dos puntos
             if(sqrt(pow((*it)->getPosx()-(*itt)->getPosx(),2)   + pow((*it)->getPosy()-(*itt)->getPosy(),2)) < 50){
 
-
+                //quitamos una vida a cada enemigo
                 (*it)->setSalud((*it)->getSalud() -1);
 
+                //si sus vidas es < 0, los eliminamos
                 if((*it)->getSalud() <=0){
                     scene->removeItem(*it);
                     enemigos.erase(it);
@@ -192,6 +214,7 @@ void MainWindow::verificarChoques()
                 scene->removeItem(*itt);
                 misiles.erase(itt);
 
+                //aumentamos el puntaje
                 jugador->incrementar_puntos(10);
 
                 break;
@@ -207,11 +230,12 @@ void MainWindow::verificarChoques()
 //Jefe 1
 void MainWindow::invocarJefe()
 {
-
+//invocamos al jefe
     jefe = new Jefe(800, 300, jugador->getNivel());
     scene->addItem(jefe);
     timer_jefe->stop();
 
+//verificamos los choques de los misiles vs nuestro jefe
     timer_jefeVsMisiles = new QTimer();
     connect(timer_jefeVsMisiles, SIGNAL(timeout()), this, SLOT(verificarChoquesVsJefe()));
     timer_jefeVsMisiles->start(50);
@@ -227,11 +251,14 @@ void MainWindow::verificarChoquesVsJefe()
 {
     //Misiles vs Jefe
     if(misiles.size() > 0){
+        //si misiles son mas o igual de 1
         for(auto itt = misiles.begin(); itt != misiles.end(); itt++){
+            //si jefe colisiona con los misiles humanos
             if(jefe->collidesWithItem(*itt)){
+                //eliminamos el misil
                 scene->removeItem(*itt);
                 misiles.erase(itt);
-
+                //reducimos su vida
                 jefe->setSalud( jefe->getSalud() - 5);
                 jugador->incrementar_puntos(5);
 
@@ -244,9 +271,12 @@ void MainWindow::verificarChoquesVsJefe()
         }
     }
 
+    //si los proyectiles enemigos tocan a nuestro humano
+    //reducimos nuestra vida
     if(proyectiles.size() > 0){
         for(auto it = proyectiles.begin(); it != proyectiles.end(); it++){
             if(humanos->collidesWithItem(*it)){
+                //eliminamos el proyectil
                 scene->removeItem(*it);
                 proyectiles.erase(it);
 
@@ -257,6 +287,9 @@ void MainWindow::verificarChoquesVsJefe()
         }
     }
 
+    //los movimientos del jefe para que vaya de arriba a abajo
+    // constantemente
+
     if(coord >= 80) coord = -80;
     if(coord > 0) jefe->MoveUp();
     if(coord < 0) jefe->MoveDown();
@@ -266,6 +299,9 @@ void MainWindow::verificarChoquesVsJefe()
 
 void MainWindow::DisparoJefe()
 {
+
+    //generamos un disparo
+
     for (int i=0; i<jugador->getNivel(); i++) {
         //Generar proyectiles
         double x= jefe->getPosx()-30;
@@ -276,6 +312,7 @@ void MainWindow::DisparoJefe()
 
         proyectiles.push_back(new Misil(x,y,v,a));
         scene->addItem(proyectiles.back());
+        //le damos movimiento
         timer_proyectiles->start(10);
     }
 }
@@ -291,7 +328,10 @@ void MainWindow::Limpiar_y_Detener(){
     timer_jefeVsMisiles->stop();
     timer_jefeDisparo->stop();
 
-    //remover objetos de listas
+    //remover objetos de listas para dejar todo en limpio
+    //tambien limpiamos toda la escena
+
+
     if(misiles.size() > 0){
         for (auto i=misiles.begin(); i<misiles.end(); i++) {
             scene->removeItem(*i);
