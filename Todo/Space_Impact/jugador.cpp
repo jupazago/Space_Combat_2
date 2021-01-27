@@ -1,15 +1,6 @@
 #include "jugador.h"
 #include <QFont>
 
-int Jugador::getClave() const
-{
-    return clave;
-}
-
-void Jugador::setClave(int value)
-{
-    clave = value;
-}
 
 int Jugador::getVidas() const
 {
@@ -31,16 +22,26 @@ void Jugador::setPuntos(int value)
     puntos = value;
 }
 
+string Jugador::getClave() const
+{
+    return clave;
+}
+
+void Jugador::setClave(const string &value)
+{
+    clave = value;
+}
+
 Jugador::Jugador()
 {
     usuario = "user";
-    clave = 1;
+    clave = "1111";
     nivel = 0;
     vidas = 3;
     puntos= 0;
 }
 
-Jugador::Jugador(string usuario_, int clave_)
+Jugador::Jugador(string usuario_, string clave_)
 {
     usuario = usuario_;
     clave = clave_;
@@ -49,7 +50,7 @@ Jugador::Jugador(string usuario_, int clave_)
     puntos = 0;
 }
 
-Jugador::Jugador(string usuario_, int clave_, int vidas_, int nivel_, int puntos_)
+Jugador::Jugador(string usuario_, string clave_, int vidas_, int nivel_, int puntos_)
 {
     usuario = usuario_;
     clave = clave_;
@@ -89,7 +90,7 @@ void Jugador::crear_nuevo()
     //Guardamos el nuevo usuario
     if(archivo.open(QIODevice::WriteOnly | QIODevice::Append)){
         QTextStream out(&archivo);
-        QString texto = "\n" + QString::fromStdString(usuario) + " " + QString::number(clave) + " " + QString::number(nivel) + " " + QString::number(vidas)+ " " + QString::number(puntos);
+        QString texto = "\n" + QString::fromStdString(usuario) + " " + QString::fromStdString(clave) + " " + QString::number(nivel) + " " + QString::number(vidas)+ " " + QString::number(puntos);
         out << texto;
         archivo.close();
     }
@@ -98,7 +99,7 @@ void Jugador::crear_nuevo()
 
 }
 
-void Jugador::cargar(string usuario_, int clave_)
+void Jugador::cargar(string usuario_, string clave_)
 {
     //Crear el flujo lectura desde un archivo
     QFile archivo("/recursos/data_base.txt");
@@ -116,7 +117,7 @@ void Jugador::cargar(string usuario_, int clave_)
             valor = in.readLine();
             QString valor3 = valor;
 
-            if(valor.toInt() == clave_){
+            if(valor.toStdString() == clave_){
                 valor = in.readLine();
 
                 if(valor > 0){
@@ -144,7 +145,7 @@ void Jugador::guardar()
 {
     struct Cuentas{
         string user;
-        int pass;
+        string pass;
         int level;
         int vidas;
         int puntos;
@@ -168,7 +169,7 @@ void Jugador::guardar()
         valor = in.readLine();
         cuenta.user = valor.toStdString();
         valor = in.readLine();
-        cuenta.pass = valor.toInt();
+        cuenta.pass = valor.toStdString();
         valor = in.readLine();
         cuenta.level = valor.toInt();
         valor = in.readLine();
@@ -202,7 +203,7 @@ void Jugador::guardar()
 
         //recorremos el vector para actualizar la base de datos
         for(auto p=begin(contenedor); p != end(contenedor); p++){
-            QString texto = QString::fromStdString(p->user) + " " + QString::number(p->pass) + " " + QString::number(p->level) + " " + QString::number(p->vidas) + " " + QString::number(p->puntos) + "\n";
+            QString texto = QString::fromStdString(p->user) + " " + QString::fromStdString(p->pass) + " " + QString::number(p->level) + " " + QString::number(p->vidas) + " " + QString::number(p->puntos) + "\n";
             out << texto;
         }
     }
@@ -222,7 +223,7 @@ void Jugador::eliminar()
 
     struct Cuentas{
         string user;
-        int pass;
+        string pass;
         int level;
         int vidas;
         int puntos;
@@ -246,7 +247,7 @@ void Jugador::eliminar()
         valor = in.readLine();
         cuenta.user = valor.toStdString();
         valor = in.readLine();
-        cuenta.pass = valor.toInt();
+        cuenta.pass = valor.toStdString();
         valor = in.readLine();
         cuenta.level = valor.toInt();
         valor = in.readLine();
@@ -278,7 +279,7 @@ void Jugador::eliminar()
 
         //recorremos el vector para actualizar la base de datos
         for(auto p=begin(contenedor); p != end(contenedor); p++){
-            QString texto = QString::fromStdString(p->user) + " " + QString::number(p->pass) + " " + QString::number(p->level) + " " + QString::number(p->vidas) + " " + QString::number(p->puntos) + "\n";
+            QString texto = QString::fromStdString(p->user) + " " + QString::fromStdString(p->pass) + " " + QString::number(p->level) + " " + QString::number(p->vidas) + " " + QString::number(p->puntos) + "\n";
             out << texto;
         }
     }

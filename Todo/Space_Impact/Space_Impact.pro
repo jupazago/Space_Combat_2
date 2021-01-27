@@ -19,6 +19,8 @@ SOURCES += \
     corazones.cpp \
     enemigo.cpp \
     humanidad.cpp \
+    inicio.cpp \
+    inicio_juego_nuevo.cpp \
     jefe.cpp \
     jugador.cpp \
     main.cpp \
@@ -32,6 +34,8 @@ HEADERS += \
     corazones.h \
     enemigo.h \
     humanidad.h \
+    inicio.h \
+    inicio_juego_nuevo.h \
     jefe.h \
     jugador.h \
     mainwindow.h \
@@ -41,6 +45,8 @@ HEADERS += \
     puntuacion.h
 
 FORMS += \
+    inicio.ui \
+    inicio_juego_nuevo.ui \
     mainwindow.ui
 
 # Default rules for deployment.

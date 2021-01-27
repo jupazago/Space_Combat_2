@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     scene = new QGraphicsScene(x,y,ancho,alto);
 
     //add jugador
-    jugador = new Jugador("jupazago", 1998);
+    jugador = new Jugador("jupazago", "1998");
     scene->addItem(jugador->graficar_vida());   //corazones
     scene->addItem(jugador->crear_puntos());    //puntuacion
     //Pared

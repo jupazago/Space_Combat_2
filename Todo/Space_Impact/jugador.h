@@ -22,7 +22,7 @@ using namespace std;
 class Jugador
 {
     string usuario;
-    int clave;
+    string clave;
     int nivel;
     int vidas;
     Corazones *corazones;
@@ -32,14 +32,14 @@ class Jugador
 public:
     //Constructores
     Jugador();
-    Jugador(string usuario_, int clave_);
-    Jugador(string usuario_, int clave_,int vidas_, int nivel_, int puntos_);
+    Jugador(string usuario_, string clave_);
+    Jugador(string usuario_, string clave_,int vidas_, int nivel_, int puntos_);
 
     //Set y get
     string getUsuario() const;
     void setUsuario(const string &value);
-    int getClave() const;
-    void setClave(int value);
+    string getClave() const;
+    void setClave(const string &value);
     int getNivel() const;
     void setNivel(int value);
     int getVidas() const;
@@ -49,7 +49,7 @@ public:
 
     //Metodos
     void crear_nuevo();
-    void cargar(string usuario_, int clave_);
+    void cargar(string usuario_, string clave_);
     void guardar();
     void reiniciar();
     void eliminar();
@@ -61,6 +61,7 @@ public:
     void incrementar_puntos(int valor);
 
     void subir_nivel();
+
 };
 
 #endif // JUGADOR_H

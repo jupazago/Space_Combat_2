@@ -21,5 +21,6 @@
         <file>recursos/lvl1.png</file>
         <file>recursos/lvl2.png</file>
         <file>recursos/niveles.jpg</file>
+        <file>recursos/fondo_inicio.jpg</file>
     </qresource>
 </RCC>
