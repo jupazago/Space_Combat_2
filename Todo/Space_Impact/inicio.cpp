@@ -15,6 +15,8 @@ Inicio::Inicio(QWidget *parent) :
 
     formulario_inicio = new Inicio_juego_nuevo();
     formulario_cargar = new inicio_juego_cargar();
+    formulario_eliminar = new Inicio_juego_eliminar();
+    formulario_reiniciar = new Inicio_juego_reiniciar();
 }
 
 Inicio::~Inicio()
@@ -36,10 +38,12 @@ void Inicio::on_btn_cargar_clicked()
 
 void Inicio::on_btn_eliminar_clicked()
 {
+    formulario_eliminar->show();
     this->hide();
 }
 
 void Inicio::on_btn_reiniciar_clicked()
 {
+    formulario_reiniciar->show();
     this->hide();
 }

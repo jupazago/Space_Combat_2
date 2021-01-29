@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <inicio_juego_nuevo.h>
 #include <inicio_juego_cargar.h>
+#include <inicio_juego_eliminar.h>
+#include <inicio_juego_reiniciar.h>
 
 namespace Ui {
 class Inicio;
@@ -31,6 +33,8 @@ private:
 
     Inicio_juego_nuevo *formulario_inicio;
     inicio_juego_cargar *formulario_cargar;
+    Inicio_juego_eliminar *formulario_eliminar;
+    Inicio_juego_reiniciar *formulario_reiniciar;
 };
 
 #endif // INICIO_H

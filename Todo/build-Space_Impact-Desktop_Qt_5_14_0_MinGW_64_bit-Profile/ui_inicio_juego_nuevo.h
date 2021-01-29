@@ -23,6 +23,9 @@ public:
     QPushButton *btn_crear;
     QLineEdit *le_usuario;
     QLineEdit *le_clave;
+    QLineEdit *le_clave_2;
+    QPushButton *btn_crear_2;
+    QLineEdit *le_usuario_2;
 
     void setupUi(QWidget *Inicio_juego_nuevo)
     {
@@ -47,6 +50,18 @@ public:
         le_clave->setObjectName(QString::fromUtf8("le_clave"));
         le_clave->setGeometry(QRect(320, 250, 211, 41));
         le_clave->setFont(font1);
+        le_clave_2 = new QLineEdit(Inicio_juego_nuevo);
+        le_clave_2->setObjectName(QString::fromUtf8("le_clave_2"));
+        le_clave_2->setGeometry(QRect(280, 0, 211, 41));
+        le_clave_2->setFont(font1);
+        btn_crear_2 = new QPushButton(Inicio_juego_nuevo);
+        btn_crear_2->setObjectName(QString::fromUtf8("btn_crear_2"));
+        btn_crear_2->setGeometry(QRect(360, 100, 181, 41));
+        btn_crear_2->setFont(font);
+        le_usuario_2 = new QLineEdit(Inicio_juego_nuevo);
+        le_usuario_2->setObjectName(QString::fromUtf8("le_usuario_2"));
+        le_usuario_2->setGeometry(QRect(0, 0, 211, 41));
+        le_usuario_2->setFont(font1);
 
         retranslateUi(Inicio_juego_nuevo);
 
@@ -59,6 +74,9 @@ public:
         btn_crear->setText(QCoreApplication::translate("Inicio_juego_nuevo", "Crear y jugar", nullptr));
         le_usuario->setText(QString());
         le_clave->setText(QString());
+        le_clave_2->setText(QString());
+        btn_crear_2->setText(QCoreApplication::translate("Inicio_juego_nuevo", "Crear y jugar", nullptr));
+        le_usuario_2->setText(QString());
     } // retranslateUi
 
 };

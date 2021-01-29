@@ -162,7 +162,7 @@ bool Jugador::cargar()
     return  false;
 }
 
-void Jugador::guardar()
+bool Jugador::guardar()
 {
     struct Cuentas{
         string user;
@@ -177,7 +177,7 @@ void Jugador::guardar()
 
     //Crear el flujo lectura desde un archivo
     QFile archivo("../Space_Impact/recursos/data_base.txt");
-    if(!archivo.open(QIODevice::ReadOnly | QIODevice::Text)){
+    if(!archivo.open(QIODevice::ReadOnly)){
         //QMessageBox::Critical(this, "¡Informacion!", "No se puede leer el archivo data_base.txt");
     }
     QTextStream in(&archivo);
@@ -205,41 +205,39 @@ void Jugador::guardar()
 
     //recorremos el vector para actualizarlo
     for(auto p=begin(contenedor); p != end(contenedor); p++){
-        if(p->user == getUsuario()){
-            p->level = getNivel();
-            p->vidas = getVidas();
-            p->puntos = getPuntos();
+        if(p->user == usuario && p->pass == clave){
+            p->level = nivel;
+            p->vidas = vidas;
+            p->puntos = puntos;
         }
     }
 
     //Guardamos el nuevo usuario
 
-    QFile archivo2("../Space_Impact/recursos/data_base.txt");
-    if(!archivo2.open(QIODevice::WriteOnly | QIODevice::Text)){
+    if(!archivo.open(QIODevice::WriteOnly| QIODevice::Text)){
         //QMessageBox::Critical(this, "¡Informacion!", "No se puede leer el archivo data_base.txt");
-    }
-
-    if(archivo2.open(QIODevice::WriteOnly | QIODevice::Text)){
-        QTextStream out(&archivo2);
+    }else{
+        QTextStream out(&archivo);
 
         //recorremos el vector para actualizar la base de datos
         for(auto p=begin(contenedor); p != end(contenedor); p++){
-            QString texto = QString::fromStdString(p->user) + " " + QString::fromStdString(p->pass) + " " + QString::number(p->level) + " " + QString::number(p->vidas) + " " + QString::number(p->puntos) + "\n";
+            QString texto = QString::fromStdString(p->user) + "\n" + QString::fromStdString(p->pass) + "\n" + QString::number(p->level) + "\n" + QString::number(p->vidas) + "\n" + QString::number(p->puntos) + "\n";
             out << texto;
         }
     }
-    archivo2.close();
+    archivo.close();
+    return true;
 }
 
-void Jugador::reiniciar()
+bool Jugador::reiniciar()
 {
     nivel=1;
     vidas = 3;
     puntos = 0;
-    guardar();
+    return guardar();
 }
 
-void Jugador::eliminar()
+bool Jugador::eliminar()
 {
     nivel=0;
 
@@ -256,7 +254,8 @@ void Jugador::eliminar()
 
     //Crear el flujo lectura desde un archivo
     QFile archivo("../Space_Impact/recursos/data_base.txt");
-    if(!archivo.open(QIODevice::ReadOnly | QIODevice::Text)){
+    if(!archivo.open(QIODevice::ReadOnly)){
+        qDebug() << "No lectura: Eliminar 1";
         //QMessageBox::Critical(this, "¡Informacion!", "No se puede leer el archivo data_base.txt");
     }
     QTextStream in(&archivo);
@@ -282,30 +281,42 @@ void Jugador::eliminar()
     }
     archivo.close();
 
+    bool encontrado = false;
+
     //recorremos el vector para actualizarlo
     for(auto p=begin(contenedor); p != end(contenedor); p++){
-        if(p->user == getUsuario()){
-            p->level = getNivel();
+        if(p->user == usuario && p->pass == clave){
+            p->level = nivel;
+            encontrado = true;
+            break;
         }
     }
+    if(encontrado == false) return false;
 
     //Guardamos el nuevo usuario
 
-    QFile archivo2("../Space_Impact/recursos/data_base.txt");
-    if(!archivo2.open(QIODevice::WriteOnly | QIODevice::Text)){
-        //QMessageBox::Critical(this, "¡Informacion!", "No se puede leer el archivo data_base.txt");
+
+
+    if(!archivo.open(QIODevice::WriteOnly | QIODevice::Text)){
+        qDebug() << "No lectura: Eliminar 2";
     }
 
-    if(archivo2.open(QIODevice::WriteOnly | QIODevice::Text)){
-        QTextStream out(&archivo2);
+    if(archivo.isOpen()){
+        qDebug() << "Actualizaremos el nivel";
+        QTextStream out(&archivo);
 
         //recorremos el vector para actualizar la base de datos
         for(auto p=begin(contenedor); p != end(contenedor); p++){
-            QString texto = QString::fromStdString(p->user) + " " + QString::fromStdString(p->pass) + " " + QString::number(p->level) + " " + QString::number(p->vidas) + " " + QString::number(p->puntos) + "\n";
+            QString texto = QString::fromStdString(p->user) + "\n" + QString::fromStdString(p->pass) + "\n" + QString::number(p->level) + "\n" + QString::number(p->vidas) + "\n" + QString::number(p->puntos) + "\n";
             out << texto;
         }
+    }else{
+        qDebug() << "No lectura: Eliminar 2";
     }
-    archivo2.close();
+
+
+    archivo.close();
+    return true;
 
 }
 

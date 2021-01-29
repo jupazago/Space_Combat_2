@@ -23,6 +23,9 @@ public:
     QLineEdit *le_clave;
     QPushButton *btn_cargar;
     QLineEdit *le_usuario;
+    QLineEdit *le_usuario_2;
+    QPushButton *btn_cargar_2;
+    QLineEdit *le_clave_2;
 
     void setupUi(QWidget *inicio_juego_cargar)
     {
@@ -47,6 +50,18 @@ public:
         le_usuario->setObjectName(QString::fromUtf8("le_usuario"));
         le_usuario->setGeometry(QRect(40, 250, 211, 41));
         le_usuario->setFont(font);
+        le_usuario_2 = new QLineEdit(inicio_juego_cargar);
+        le_usuario_2->setObjectName(QString::fromUtf8("le_usuario_2"));
+        le_usuario_2->setGeometry(QRect(400, 390, 211, 41));
+        le_usuario_2->setFont(font);
+        btn_cargar_2 = new QPushButton(inicio_juego_cargar);
+        btn_cargar_2->setObjectName(QString::fromUtf8("btn_cargar_2"));
+        btn_cargar_2->setGeometry(QRect(760, 490, 181, 41));
+        btn_cargar_2->setFont(font1);
+        le_clave_2 = new QLineEdit(inicio_juego_cargar);
+        le_clave_2->setObjectName(QString::fromUtf8("le_clave_2"));
+        le_clave_2->setGeometry(QRect(680, 390, 211, 41));
+        le_clave_2->setFont(font);
 
         retranslateUi(inicio_juego_cargar);
 
@@ -59,6 +74,9 @@ public:
         le_clave->setText(QString());
         btn_cargar->setText(QCoreApplication::translate("inicio_juego_cargar", "Cargar", nullptr));
         le_usuario->setText(QString());
+        le_usuario_2->setText(QString());
+        btn_cargar_2->setText(QCoreApplication::translate("inicio_juego_cargar", "Cargar", nullptr));
+        le_clave_2->setText(QString());
     } // retranslateUi
 
 };

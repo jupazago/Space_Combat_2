@@ -50,9 +50,9 @@ public:
     //Metodos
     bool crear_nuevo();
     bool cargar();
-    void guardar();
-    void reiniciar();
-    void eliminar();
+    bool guardar();
+    bool reiniciar();
+    bool eliminar();
     bool existe_registro();
 
     Corazones *graficar_vida();

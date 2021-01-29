@@ -21,7 +21,9 @@ SOURCES += \
     humanidad.cpp \
     inicio.cpp \
     inicio_juego_cargar.cpp \
+    inicio_juego_eliminar.cpp \
     inicio_juego_nuevo.cpp \
+    inicio_juego_reiniciar.cpp \
     jefe.cpp \
     jugador.cpp \
     main.cpp \
@@ -37,7 +39,9 @@ HEADERS += \
     humanidad.h \
     inicio.h \
     inicio_juego_cargar.h \
+    inicio_juego_eliminar.h \
     inicio_juego_nuevo.h \
+    inicio_juego_reiniciar.h \
     jefe.h \
     jugador.h \
     mainwindow.h \
@@ -49,7 +53,9 @@ HEADERS += \
 FORMS += \
     inicio.ui \
     inicio_juego_cargar.ui \
+    inicio_juego_eliminar.ui \
     inicio_juego_nuevo.ui \
+    inicio_juego_reiniciar.ui \
     mainwindow.ui
 
 # Default rules for deployment.
