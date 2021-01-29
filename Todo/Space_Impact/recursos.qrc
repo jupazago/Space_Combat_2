@@ -22,5 +22,6 @@
         <file>recursos/lvl2.png</file>
         <file>recursos/niveles.jpg</file>
         <file>recursos/fondo_inicio.jpg</file>
+        <file>recursos/fondo_pregunta.jpg</file>
     </qresource>
 </RCC>

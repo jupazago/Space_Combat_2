@@ -13,6 +13,8 @@ Inicio::Inicio(QWidget *parent) :
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
 
+    formulario_inicio = new Inicio_juego_nuevo();
+    formulario_cargar = new inicio_juego_cargar();
 }
 
 Inicio::~Inicio()
@@ -22,12 +24,13 @@ Inicio::~Inicio()
 
 void Inicio::on_btn_nuevo_clicked()
 {
+    formulario_inicio->show();
     this->hide();
-    formulario_inicio.show();
 }
 
 void Inicio::on_btn_cargar_clicked()
 {
+    formulario_cargar->show();
     this->hide();
 }
 
@@ -36,7 +39,7 @@ void Inicio::on_btn_eliminar_clicked()
     this->hide();
 }
 
-void Inicio::on_pushButton_4_clicked()
+void Inicio::on_btn_reiniciar_clicked()
 {
     this->hide();
 }

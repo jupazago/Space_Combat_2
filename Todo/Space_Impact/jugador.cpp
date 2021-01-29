@@ -1,6 +1,6 @@
 #include "jugador.h"
 #include <QFont>
-
+#include <QtGui>
 
 int Jugador::getVidas() const
 {
@@ -79,32 +79,45 @@ void Jugador::setNivel(int value)
     nivel = value;
 }
 
-void Jugador::crear_nuevo()
+bool Jugador::crear_nuevo()
 {
-    //Crear el flujo escritura desde un archivo
-    QFile archivo("/recursos/data_base.txt");
-    if(!archivo.open(QIODevice::WriteOnly | QIODevice::Append)){
-        //QMessageBox::Critical(this, "¡Informacion!", "No se puede leer el archivo data_base.txt");
-    }
+
 
     //Guardamos el nuevo usuario
-    if(archivo.open(QIODevice::WriteOnly | QIODevice::Append)){
-        QTextStream out(&archivo);
-        QString texto = "\n" + QString::fromStdString(usuario) + " " + QString::fromStdString(clave) + " " + QString::number(nivel) + " " + QString::number(vidas)+ " " + QString::number(puntos);
-        out << texto;
+    //si no existe ese usuario, guardamos
+    if(existe_registro() == false){
+        //qDebug() <<"Como no se encontro, vamos a crearlo";
+
+        //Crear el flujo escritura desde un archivo
+        QFile archivo("../Space_Impact/recursos/data_base.txt");
+        if(!archivo.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)){
+            //QMessageBox::information(this, "Informacion", "No se puede leer el archivo data_base.txt");
+            qDebug() << "No lectura: Crear Nuevo";
+        }else{
+            QTextStream out(&archivo);
+            QString texto = "\n" + QString::fromStdString(usuario) + "\n" + QString::fromStdString(clave) + "\n" + QString::number(nivel) + "\n" + QString::number(vidas)+ "\n" + QString::number(puntos);
+
+            out << texto;
+            archivo.close();
+            qDebug() <<"Nueva cuenta Creada";
+            return true;
+        }
+
         archivo.close();
     }
+    qDebug() <<"NO Creado";
 
-
+    return false;
 
 }
 
-void Jugador::cargar(string usuario_, string clave_)
+bool Jugador::cargar()
 {
     //Crear el flujo lectura desde un archivo
-    QFile archivo("/recursos/data_base.txt");
-    if(!archivo.open(QIODevice::ReadOnly | QIODevice::Text)){
+    QFile archivo("../Space_Impact/recursos/data_base.txt");
+    if(!archivo.open(QIODevice::ReadOnly)){
         //QMessageBox::Critical(this, "¡Informacion!", "No se puede leer el archivo data_base.txt");
+        qDebug() << "No lectura: Cargar";
     }
     QTextStream in(&archivo);
     QString valor;
@@ -112,19 +125,22 @@ void Jugador::cargar(string usuario_, string clave_)
     while(!in.atEnd()){ //mientras no sea el final del archivo
         valor = in.readLine();
 
-        if(valor.toStdString() == usuario_){
-            QString valor2 = valor;
+        //si el usuario existe
+        if(valor.toStdString() == usuario){
+            QString valor2 = valor; //valor 2 es el usuario
             valor = in.readLine();
-            QString valor3 = valor;
+            QString valor3 = valor; //valor 3 es la clave
 
-            if(valor.toStdString() == clave_){
-                valor = in.readLine();
+            //si su contrasenia coincide
+            if(valor3.toStdString() == clave){
+                valor = in.readLine(); //obtenemos el nivel
 
+                //si nivel es correcto
                 if(valor > 0){
                     //actulizar
                     usuario = valor2.toStdString();
 
-                    clave = valor3.toInt();
+                    clave = valor3.toStdString();
 
                     nivel = valor.toInt();
 
@@ -133,12 +149,17 @@ void Jugador::cargar(string usuario_, string clave_)
 
                     valor = in.readLine();
                     puntos = valor.toInt();
-                    break;
+                    archivo.close();
+                    return true;
                 }
+            }else{
+                archivo.close();
+                return false;
             }
         }
     }
     archivo.close();
+    return  false;
 }
 
 void Jugador::guardar()
@@ -155,7 +176,7 @@ void Jugador::guardar()
 
 
     //Crear el flujo lectura desde un archivo
-    QFile archivo("/recursos/data_base.txt");
+    QFile archivo("../Space_Impact/recursos/data_base.txt");
     if(!archivo.open(QIODevice::ReadOnly | QIODevice::Text)){
         //QMessageBox::Critical(this, "¡Informacion!", "No se puede leer el archivo data_base.txt");
     }
@@ -193,7 +214,7 @@ void Jugador::guardar()
 
     //Guardamos el nuevo usuario
 
-    QFile archivo2("/recursos/data_base.txt");
+    QFile archivo2("../Space_Impact/recursos/data_base.txt");
     if(!archivo2.open(QIODevice::WriteOnly | QIODevice::Text)){
         //QMessageBox::Critical(this, "¡Informacion!", "No se puede leer el archivo data_base.txt");
     }
@@ -215,6 +236,7 @@ void Jugador::reiniciar()
     nivel=1;
     vidas = 3;
     puntos = 0;
+    guardar();
 }
 
 void Jugador::eliminar()
@@ -233,7 +255,7 @@ void Jugador::eliminar()
 
 
     //Crear el flujo lectura desde un archivo
-    QFile archivo("/recursos/data_base.txt");
+    QFile archivo("../Space_Impact/recursos/data_base.txt");
     if(!archivo.open(QIODevice::ReadOnly | QIODevice::Text)){
         //QMessageBox::Critical(this, "¡Informacion!", "No se puede leer el archivo data_base.txt");
     }
@@ -269,7 +291,7 @@ void Jugador::eliminar()
 
     //Guardamos el nuevo usuario
 
-    QFile archivo2("/recursos/data_base.txt");
+    QFile archivo2("../Space_Impact/recursos/data_base.txt");
     if(!archivo2.open(QIODevice::WriteOnly | QIODevice::Text)){
         //QMessageBox::Critical(this, "¡Informacion!", "No se puede leer el archivo data_base.txt");
     }
@@ -284,6 +306,62 @@ void Jugador::eliminar()
         }
     }
     archivo2.close();
+
+}
+
+bool Jugador::existe_registro()
+{
+    struct Cuentas{
+        string user;
+        string pass;
+        int level;
+        int vidas;
+        int puntos;
+    };
+
+    vector<Cuentas> contenedor;
+
+    //Crear el flujo escritura desde un archivo
+    QFile archivo("../Space_Impact/recursos/data_base.txt");
+    if(!archivo.open(QIODevice::ReadOnly)){
+        //QMessageBox::information(this, "Informacion", "No se puede leer el archivo data_base.txt");
+        qDebug() << "No lectura: Existe Registro";
+    }
+
+    QTextStream in(&archivo);
+    QString valor;
+
+    while(!in.atEnd()){ //mientras no sea el final del archivo
+        Cuentas cuenta;
+
+        //Obtenemos los valores
+        valor = in.readLine();
+        cuenta.user = valor.toStdString();
+        //qDebug() << QString::fromStdString(cuenta.user);
+        valor = in.readLine();
+        cuenta.pass = valor.toStdString();
+        valor = in.readLine();
+        cuenta.level = valor.toInt();
+        valor = in.readLine();
+        cuenta.vidas = valor.toInt();
+        valor = in.readLine();
+        cuenta.puntos = valor.toInt();
+
+        //Lo agregamos al vector de cuentas
+        contenedor.push_back(cuenta);
+    }
+    archivo.close();
+
+
+    //recorremos el vector para actualizarlo
+    for(auto p=begin(contenedor); p != end(contenedor); p++){
+        if(p->user == usuario){
+            //qDebug() << QString::fromStdString(p->user);
+            //qDebug() << QString::fromStdString(usuario);
+            return true;
+        }
+    }
+    return false;
 
 }
 

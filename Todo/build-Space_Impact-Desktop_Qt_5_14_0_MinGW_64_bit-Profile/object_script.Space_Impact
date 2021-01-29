@@ -2,6 +2,7 @@ corazones.o
 enemigo.o
 humanidad.o
 inicio.o
+inicio_juego_cargar.o
 inicio_juego_nuevo.o
 jefe.o
 jugador.o
@@ -16,6 +17,7 @@ moc_corazones.o
 moc_enemigo.o
 moc_humanidad.o
 moc_inicio.o
+moc_inicio_juego_cargar.o
 moc_inicio_juego_nuevo.o
 moc_jefe.o
 moc_mainwindow.o

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <inicio_juego_nuevo.h>
+#include <inicio_juego_cargar.h>
 
 namespace Ui {
 class Inicio;
@@ -23,12 +24,13 @@ private slots:
 
     void on_btn_eliminar_clicked();
 
-    void on_pushButton_4_clicked();
+    void on_btn_reiniciar_clicked();
 
 private:
     Ui::Inicio *ui;
 
-    Inicio_juego_nuevo formulario_inicio;
+    Inicio_juego_nuevo *formulario_inicio;
+    inicio_juego_cargar *formulario_cargar;
 };
 
 #endif // INICIO_H

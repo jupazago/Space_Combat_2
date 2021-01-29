@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Inicio_t {
     QByteArrayData data[6];
-    char stringdata0[99];
+    char stringdata0[100];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,12 +37,12 @@ QT_MOC_LITERAL(1, 7, 20), // "on_btn_nuevo_clicked"
 QT_MOC_LITERAL(2, 28, 0), // ""
 QT_MOC_LITERAL(3, 29, 21), // "on_btn_cargar_clicked"
 QT_MOC_LITERAL(4, 51, 23), // "on_btn_eliminar_clicked"
-QT_MOC_LITERAL(5, 75, 23) // "on_pushButton_4_clicked"
+QT_MOC_LITERAL(5, 75, 24) // "on_btn_reiniciar_clicked"
 
     },
     "Inicio\0on_btn_nuevo_clicked\0\0"
     "on_btn_cargar_clicked\0on_btn_eliminar_clicked\0"
-    "on_pushButton_4_clicked"
+    "on_btn_reiniciar_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -83,7 +83,7 @@ void Inicio::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         case 0: _t->on_btn_nuevo_clicked(); break;
         case 1: _t->on_btn_cargar_clicked(); break;
         case 2: _t->on_btn_eliminar_clicked(); break;
-        case 3: _t->on_pushButton_4_clicked(); break;
+        case 3: _t->on_btn_reiniciar_clicked(); break;
         default: ;
         }
     }

@@ -11,7 +11,6 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
@@ -24,8 +23,6 @@ public:
     QPushButton *btn_crear;
     QLineEdit *le_usuario;
     QLineEdit *le_clave;
-    QLabel *label;
-    QLabel *label_2;
 
     void setupUi(QWidget *Inicio_juego_nuevo)
     {
@@ -50,20 +47,6 @@ public:
         le_clave->setObjectName(QString::fromUtf8("le_clave"));
         le_clave->setGeometry(QRect(320, 250, 211, 41));
         le_clave->setFont(font1);
-        label = new QLabel(Inicio_juego_nuevo);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(40, 210, 111, 31));
-        QFont font2;
-        font2.setPointSize(14);
-        font2.setBold(true);
-        font2.setWeight(75);
-        label->setFont(font2);
-        label->setAutoFillBackground(false);
-        label_2 = new QLabel(Inicio_juego_nuevo);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(320, 210, 111, 31));
-        label_2->setFont(font2);
-        label_2->setAutoFillBackground(false);
 
         retranslateUi(Inicio_juego_nuevo);
 
@@ -76,8 +59,6 @@ public:
         btn_crear->setText(QCoreApplication::translate("Inicio_juego_nuevo", "Crear y jugar", nullptr));
         le_usuario->setText(QString());
         le_clave->setText(QString());
-        label->setText(QCoreApplication::translate("Inicio_juego_nuevo", "Usuario", nullptr));
-        label_2->setText(QCoreApplication::translate("Inicio_juego_nuevo", "Clave", nullptr));
     } // retranslateUi
 
 };

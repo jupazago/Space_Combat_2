@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <string>
 #include <jugador.h>
+#include <mainwindow.h>
 
 namespace Ui {
 class Inicio_juego_nuevo;
@@ -23,6 +24,7 @@ private slots:
 private:
     Ui::Inicio_juego_nuevo *ui;
 
+    MainWindow *juego;
     Jugador *jugador;
 };
 

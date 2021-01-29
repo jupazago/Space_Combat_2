@@ -20,6 +20,7 @@ SOURCES += \
     enemigo.cpp \
     humanidad.cpp \
     inicio.cpp \
+    inicio_juego_cargar.cpp \
     inicio_juego_nuevo.cpp \
     jefe.cpp \
     jugador.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     enemigo.h \
     humanidad.h \
     inicio.h \
+    inicio_juego_cargar.h \
     inicio_juego_nuevo.h \
     jefe.h \
     jugador.h \
@@ -46,6 +48,7 @@ HEADERS += \
 
 FORMS += \
     inicio.ui \
+    inicio_juego_cargar.ui \
     inicio_juego_nuevo.ui \
     mainwindow.ui
 

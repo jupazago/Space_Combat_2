@@ -48,11 +48,12 @@ public:
     void setPuntos(int value);
 
     //Metodos
-    void crear_nuevo();
-    void cargar(string usuario_, string clave_);
+    bool crear_nuevo();
+    bool cargar();
     void guardar();
     void reiniciar();
     void eliminar();
+    bool existe_registro();
 
     Corazones *graficar_vida();
     void eliminar_Corazon();
