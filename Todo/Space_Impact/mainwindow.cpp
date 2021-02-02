@@ -7,7 +7,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
     //Add escena
     QRect Desktop = QApplication::desktop()->screenGeometry();
     x = Desktop.x();
@@ -15,18 +14,33 @@ MainWindow::MainWindow(QWidget *parent)
     ancho = 995;
     alto = 590;
 
+    scene = new QGraphicsScene(x,y,ancho,alto);
+
+    //iniciar("jupazago", "1998");
+
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::iniciar(string u, string c){
+
     timer_enemigo       = new QTimer();
     timer_misiles       = new QTimer();
     timer_choques       = new QTimer();
     timer_jefe          = new QTimer();
     timer_jefeDisparo   = new QTimer();
 
-    scene = new QGraphicsScene(x,y,ancho,alto);
-
     //add jugador
-    jugador = new Jugador("jupazago", "1998");
+
+    jugador = new Jugador(u, c);
+    jugador->cargar(); //obetenemos sus atributos restantes (puntos, vidas, nivel)
     scene->addItem(jugador->graficar_vida());   //corazones
     scene->addItem(jugador->crear_puntos());    //puntuacion
+
+
     //Pared
     //                   x-y-ancho-alto
     paredes.push_back(new Pared(-1,100,1000,10));
@@ -62,10 +76,6 @@ MainWindow::MainWindow(QWidget *parent)
     nivel();
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
 
 void MainWindow::keyPressEvent(QKeyEvent *evento)
 {

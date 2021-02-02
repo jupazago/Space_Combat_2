@@ -28,8 +28,12 @@ void inicio_juego_cargar::on_btn_cargar_clicked()
 
     if(jugador->cargar() == true){
 
-        this->close();
-        //juego->show();
+        this->hide();
+
+        juego = new MainWindow();
+        juego->show();
+        juego->iniciar(usuario, clave);
+
     }else{
         QMessageBox::information(this, "Informacion", "Resgistro incorrecto o no existe");
     }
