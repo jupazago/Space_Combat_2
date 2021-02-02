@@ -28,8 +28,11 @@ void Inicio_juego_nuevo::on_btn_crear_clicked()
 
     if(jugador->crear_nuevo() == true){
 
-        this->close();
-        //juego->show();
+        this->hide();
+
+        juego = new MainWindow();
+        juego->show();
+        juego->iniciar(usuario, clave);
     }else{
         QMessageBox::information(this, "Informacion", "Usuario no disponible");
     }

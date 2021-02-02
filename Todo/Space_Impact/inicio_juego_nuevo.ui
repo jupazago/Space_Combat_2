@@ -69,62 +69,6 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLineEdit" name="le_clave_2">
-   <property name="geometry">
-    <rect>
-     <x>280</x>
-     <y>0</y>
-     <width>211</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btn_crear_2">
-   <property name="geometry">
-    <rect>
-     <x>360</x>
-     <y>100</y>
-     <width>181</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>13</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>Crear y jugar</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="le_usuario_2">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>211</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections/>

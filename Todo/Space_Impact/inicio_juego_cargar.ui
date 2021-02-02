@@ -69,62 +69,6 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLineEdit" name="le_usuario_2">
-   <property name="geometry">
-    <rect>
-     <x>400</x>
-     <y>390</y>
-     <width>211</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btn_cargar_2">
-   <property name="geometry">
-    <rect>
-     <x>760</x>
-     <y>490</y>
-     <width>181</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>13</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>Cargar</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="le_clave_2">
-   <property name="geometry">
-    <rect>
-     <x>680</x>
-     <y>390</y>
-     <width>211</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>12</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections/>

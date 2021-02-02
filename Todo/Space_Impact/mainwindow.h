@@ -38,7 +38,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    //recibe ususario y clave
+    void iniciar(string u, string c);
+
 private slots:
+
     void nivel();
 
     void Limpiar_y_Detener();

@@ -7,7 +7,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
     //Add escena
     QRect Desktop = QApplication::desktop()->screenGeometry();
     x = Desktop.x();
@@ -15,18 +14,34 @@ MainWindow::MainWindow(QWidget *parent)
     ancho = 995;
     alto = 590;
 
+    scene = new QGraphicsScene(x,y,ancho,alto);
+
+    //iniciar("jupazago", "1998");
+
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::iniciar(string u, string c){
+
     timer_enemigo       = new QTimer();
     timer_misiles       = new QTimer();
     timer_choques       = new QTimer();
     timer_jefe          = new QTimer();
     timer_jefeDisparo   = new QTimer();
 
-    scene = new QGraphicsScene(x,y,ancho,alto);
-
     //add jugador
-    jugador = new Jugador("jupazago", "1998");
+
+    jugador = new Jugador(u, c);
+    jugador->cargar(); //obetenemos sus atributos restantes (puntos, vidas, nivel)
     scene->addItem(jugador->graficar_vida());   //corazones
+    jugador->eliminar_Corazon();
     scene->addItem(jugador->crear_puntos());    //puntuacion
+    jugador->incrementar_puntos(0);
+
     //Pared
     //                   x-y-ancho-alto
     paredes.push_back(new Pared(-1,100,1000,10));
@@ -62,10 +77,6 @@ MainWindow::MainWindow(QWidget *parent)
     nivel();
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
 
 void MainWindow::keyPressEvent(QKeyEvent *evento)
 {
@@ -160,23 +171,26 @@ void MainWindow::Mover2()
 void MainWindow::MoverEnemigo()
 {
     int contador = 0;
-    for(auto it = enemigos.begin(); it != enemigos.end(); it++){
-        //muevo enemigo
-        (*it)->Move();
+    if(enemigos.size() > 0){
+        for(auto it = enemigos.begin(); it != enemigos.end(); it++){
+            //muevo enemigo
+            (*it)->Move();
 
-        //si coliciona con la pared invisible a la izquierda
-        //desapaece de la escena, limpia de la lista
-        // y eliminamos una vida de nuestro humano
-        if((*it)->collidesWithItem(eliminacion_enemiga)){
-            scene->removeItem(*it);
-            enemigos.erase(it);
-            jugador->setVidas(jugador->getVidas()-1);
-            jugador->eliminar_Corazon();
-            break;
+            //si coliciona con la pared invisible a la izquierda
+            //desapaece de la escena, limpia de la lista
+            // y eliminamos una vida de nuestro humano
+
+            if((*it)->collidesWithItem(eliminacion_enemiga)){
+                scene->removeItem(*it);
+                enemigos.erase(it);
+                jugador->setVidas(jugador->getVidas()-1);
+                jugador->eliminar_Corazon();
+                break;
+            }
+
+            contador++;
         }
-        contador++;
     }
-
     //tambien movemos el paisaje, las nubes
     MoverPaisaje();
 }
@@ -197,34 +211,37 @@ void MainWindow::verificarChoques()
     //Misiles vs enemigos
     int contador1 = 0;
     int contador2 = 0;
-    for(auto it = enemigos.begin(); it != enemigos.end(); it++){
-        for(auto itt = misiles.begin(); itt != misiles.end(); itt++){
-            //si el radio de choque esta dentro del rango
-            //distancia entre dos puntos
-            if(sqrt(pow((*it)->getPosx()-(*itt)->getPosx(),2)   + pow((*it)->getPosy()-(*itt)->getPosy(),2)) < 50){
 
-                //quitamos una vida a cada enemigo
-                (*it)->setSalud((*it)->getSalud() -1);
+    if(misiles.size() > 0 && (enemigos.size() > 0)){
+        for(auto it = enemigos.begin(); it != enemigos.end(); it++){
+            for(auto itt = misiles.begin(); itt != misiles.end(); itt++){
+                //si el radio de choque esta dentro del rango
+                //distancia entre dos puntos
+                if(sqrt(pow((*it)->getPosx()-(*itt)->getPosx(),2)   + pow((*it)->getPosy()-(*itt)->getPosy(),2)) < 50){
 
-                //si sus vidas es < 0, los eliminamos
-                if((*it)->getSalud() <=0){
-                    scene->removeItem(*it);
-                    enemigos.erase(it);
+                    //quitamos una vida a cada enemigo
+                    (*it)->setSalud((*it)->getSalud() -1);
+
+                    //si sus vidas es < 0, los eliminamos
+                    if((*it)->getSalud() <=0){
+                        scene->removeItem(*it);
+                        enemigos.erase(it);
+                    }
+                    scene->removeItem(*itt);
+                    misiles.erase(itt);
+
+                    //aumentamos el puntaje
+                    jugador->incrementar_puntos(10);
+
+                    break;
                 }
-                scene->removeItem(*itt);
-                misiles.erase(itt);
-
-                //aumentamos el puntaje
-                jugador->incrementar_puntos(10);
-
-                break;
+                contador2++;
             }
-            contador2++;
+            contador1++;
         }
-        contador1++;
     }
-}
 
+}
 
 
 //Jefe 1
@@ -420,8 +437,8 @@ void MainWindow::nivel()
     timer_choques->start(100);
 
     //Add Jefe
-    timer_jefe->start(6000);
+    //timer_jefe->start(6000);
 
     //add disparos del jefe
-    timer_jefeDisparo->start(6000);
+    //timer_jefeDisparo->start(6000);
 }
