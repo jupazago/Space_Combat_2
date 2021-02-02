@@ -40,7 +40,11 @@ void MainWindow::iniciar(string u, string c){
     scene->addItem(jugador->graficar_vida());   //corazones
     jugador->eliminar_Corazon();
     scene->addItem(jugador->crear_puntos());    //puntuacion
+<<<<<<< HEAD
     jugador->incrementar_puntos(0);
+=======
+
+>>>>>>> origin/master
 
     //Pared
     //                   x-y-ancho-alto
