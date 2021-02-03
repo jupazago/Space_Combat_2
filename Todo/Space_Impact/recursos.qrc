@@ -4,7 +4,6 @@
         <file>recursos/data_base.txt</file>
         <file>recursos/amongus.png</file>
         <file>recursos/bola.png</file>
-        <file>recursos/amongus2.png</file>
         <file>recursos/enemigo1.png</file>
         <file>recursos/vidas.png</file>
         <file>recursos/paisaje1.png</file>
@@ -23,5 +22,7 @@
         <file>recursos/niveles.jpg</file>
         <file>recursos/fondo_inicio.jpg</file>
         <file>recursos/fondo_pregunta.jpg</file>
+        <file>recursos/fondo_prueba2.jpg</file>
+        <file>recursos/fondo_prueba3.jpg</file>
     </qresource>
 </RCC>

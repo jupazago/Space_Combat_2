@@ -40,11 +40,10 @@ void MainWindow::iniciar(string u, string c){
     scene->addItem(jugador->graficar_vida());   //corazones
     jugador->eliminar_Corazon();
     scene->addItem(jugador->crear_puntos());    //puntuacion
-<<<<<<< HEAD
     jugador->incrementar_puntos(0);
-=======
 
->>>>>>> origin/master
+
+
 
     //Pared
     //                   x-y-ancho-alto
@@ -115,7 +114,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
     if(evento->key()==Qt::Key_1 && humanos->getExiste() == true){
         double x= humanos->getPosx()+30;
-        double y= humanos->getPosy()+30;
+        double y= humanos->getPosy();
         double v= 100;
         double a= -45;
         a = (a*3.14159)/180; //angulo en radianes
@@ -247,16 +246,15 @@ void MainWindow::verificarChoques()
 
 }
 
-
 //Jefe 1
 void MainWindow::invocarJefe()
 {
-//invocamos al jefe
+    //invocamos al jefe
     jefe = new Jefe(800, 300, jugador->getNivel());
     scene->addItem(jefe);
     timer_jefe->stop();
 
-//verificamos los choques de los misiles vs nuestro jefe
+    //verificamos los choques de los misiles vs nuestro jefe
     timer_jefeVsMisiles = new QTimer();
     connect(timer_jefeVsMisiles, SIGNAL(timeout()), this, SLOT(verificarChoquesVsJefe()));
     timer_jefeVsMisiles->start(50);
@@ -323,7 +321,7 @@ void MainWindow::DisparoJefe()
 
     //generamos un disparo
 
-    for (int i=0; i<jugador->getNivel(); i++) {
+    for (int i=0; i<(jugador->getNivel()-1); i++) {
         //Generar proyectiles
         double x= jefe->getPosx()-30;
         double y= jefe->getPosy()-30;
@@ -333,6 +331,7 @@ void MainWindow::DisparoJefe()
 
         proyectiles.push_back(new Misil(x,y,v,a));
         scene->addItem(proyectiles.back());
+
         //le damos movimiento
         timer_proyectiles->start(10);
     }
@@ -406,8 +405,28 @@ void MainWindow::nivel()
 {
     humanos->setExiste(true);
 
-    scene->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba.jpg"));
-    ui->graphicsView->setScene(scene);
+
+    if(jugador->getNivel() == 1){
+        scene->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba.jpg"));
+        ui->graphicsView->setScene(scene);
+
+    }else if(jugador->getNivel() == 2){
+        scene->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba2.jpg"));
+        ui->graphicsView->setScene(scene);
+
+    }else if(jugador->getNivel() == 3){
+        scene->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba3.jpg"));
+        ui->graphicsView->setScene(scene);
+
+    }else if(jugador->getNivel() == 4){
+        scene->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba.jpg"));
+        ui->graphicsView->setScene(scene);
+
+    }else if(jugador->getNivel() == 5){
+        scene->setBackgroundBrush(QPixmap(":/recursos/fondo_prueba.jpg"));
+        ui->graphicsView->setScene(scene);
+    }
+
 
     //add enemigos por lvl
     int ejey;
@@ -417,17 +436,20 @@ void MainWindow::nivel()
         scene->addItem(enemigos.back());
     }
 
-    //add nubes
-    int ejex, nube=1;
-    ejey=0;
-    for (int i=0; i<100; i++) {
-        ejex = rand() %10000 + 1;
-        ejey = rand() %600 + 1;
-        nubes.push_back(new Paisaje(ejex, ejey, nube));
-        scene->addItem(nubes.back());
-        nube++;
-        if(nube>5) nube = 1;
+    if(jugador->getNivel() != 2){
+        //add nubes
+        int ejex, nube=1;
+        ejey=0;
+        for (int i=0; i<100; i++) {
+            ejex = rand() %10000 + 1;
+            ejey = rand() %600 + 1;
+            nubes.push_back(new Paisaje(ejex, ejey, nube));
+            scene->addItem(nubes.back());
+            nube++;
+            if(nube>5) nube = 1;
+        }
     }
+
     //montania
     scene->addItem(new Paisaje(500,585,6));
 
@@ -441,7 +463,7 @@ void MainWindow::nivel()
     timer_choques->start(100);
 
     //Add Jefe
-    //timer_jefe->start(6000);
+    timer_jefe->start(60000);
 
     //add disparos del jefe
     //timer_jefeDisparo->start(6000);

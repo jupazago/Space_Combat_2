@@ -550,6 +550,8 @@ compiler_rcc_clean:
 qrc_recursos.cpp: ../Space_Impact/recursos.qrc \
 		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/bin/rcc.exe \
 		../Space_Impact/recursos/jefe1.png \
+		../Space_Impact/recursos/fondo_prueba2.jpg \
+		../Space_Impact/recursos/fondo_prueba3.jpg \
 		../Space_Impact/recursos/lvl1.png \
 		../Space_Impact/recursos/lvl2.png \
 		../Space_Impact/recursos/fondo_prueba.jpg \
@@ -567,7 +569,6 @@ qrc_recursos.cpp: ../Space_Impact/recursos.qrc \
 		../Space_Impact/recursos/paisaje5.png \
 		../Space_Impact/recursos/fondo_lvl5.png \
 		../Space_Impact/recursos/amongus.png \
-		../Space_Impact/recursos/amongus2.png \
 		../Space_Impact/recursos/fondo_pregunta.jpg \
 		../Space_Impact/recursos/data_base.txt \
 		../Space_Impact/recursos/fondo_inicio.jpg \
@@ -3101,7 +3102,24 @@ inicio_juego_reiniciar.o: ../Space_Impact/inicio_juego_reiniciar.cpp ../Space_Im
 		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtWidgets/QGraphicsTextItem \
 		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtCore/QString \
 		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtCore/QTextStream \
-		ui_inicio_juego_reiniciar.h
+		ui_inicio_juego_reiniciar.h \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtCore/QVariant \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtWidgets/QApplication \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtWidgets/qapplication.h \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtCore/qcoreapplication.h \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtCore/qeventloop.h \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtWidgets/qdesktopwidget.h \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtGui/qguiapplication.h \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtGui/qinputmethod.h \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtWidgets/QLineEdit \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtWidgets/qlineedit.h \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtWidgets/qframe.h \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtGui/qtextcursor.h \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtGui/qtextformat.h \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtWidgets/QPushButton \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtWidgets/qpushbutton.h \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/Qt5.14.0/5.14.0/mingw73_64/include/QtGui/qicon.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o inicio_juego_reiniciar.o ..\Space_Impact\inicio_juego_reiniciar.cpp
 
 jefe.o: ../Space_Impact/jefe.cpp ../Space_Impact/jefe.h \
