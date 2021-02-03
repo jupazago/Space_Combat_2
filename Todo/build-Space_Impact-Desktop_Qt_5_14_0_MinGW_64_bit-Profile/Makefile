@@ -570,6 +570,7 @@ qrc_recursos.cpp: ../Space_Impact/recursos.qrc \
 		../Space_Impact/recursos/fondo_lvl5.png \
 		../Space_Impact/recursos/amongus.png \
 		../Space_Impact/recursos/fondo_pregunta.jpg \
+		../Space_Impact/recursos/instructivo.jpg \
 		../Space_Impact/recursos/data_base.txt \
 		../Space_Impact/recursos/fondo_inicio.jpg \
 		../Space_Impact/recursos/vidas.png

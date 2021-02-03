@@ -5,6 +5,7 @@
 #include <string>
 #include <jugador.h>
 #include <mainwindow.h>
+#include <QTimer>
 
 namespace Ui {
 class inicio_juego_cargar;
@@ -20,12 +21,15 @@ public:
 
 private slots:
     void on_btn_cargar_clicked();
+    void empezar();
 
 private:
     Ui::inicio_juego_cargar *ui;
 
     MainWindow *juego;
     Jugador *jugador;
+
+    QTimer *timer_instructivo;
 };
 
 #endif // INICIO_JUEGO_CARGAR_H

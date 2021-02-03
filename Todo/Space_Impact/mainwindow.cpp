@@ -136,6 +136,19 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
         timer_misiles->start(5);
     }
 
+
+    //Tecla de M de menu
+    if(evento->key()==Qt::Key_M){
+
+        this->close();
+
+    }
+
+    //Tecla de P de pausar
+    if(evento->key()==Qt::Key_P){
+
+    }
+
 }
 
 //Mover misiles

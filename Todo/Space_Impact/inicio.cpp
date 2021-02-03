@@ -27,23 +27,23 @@ Inicio::~Inicio()
 void Inicio::on_btn_nuevo_clicked()
 {
     formulario_inicio->show();
-    this->hide();
+    //this->hide();
 }
 
 void Inicio::on_btn_cargar_clicked()
 {
     formulario_cargar->show();
-    this->hide();
+    //this->hide();
 }
 
 void Inicio::on_btn_eliminar_clicked()
 {
     formulario_eliminar->show();
-    this->hide();
+    //this->hide();
 }
 
 void Inicio::on_btn_reiniciar_clicked()
 {
     formulario_reiniciar->show();
-    this->hide();
+    //this->hide();
 }

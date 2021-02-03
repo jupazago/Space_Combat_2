@@ -103,5 +103,8 @@ private:
     QList<Paisaje *> nubes;
 
     void keyPressEvent(QKeyEvent *evento);
+
+    //menu principal
+
 };
 #endif // MAINWINDOW_H

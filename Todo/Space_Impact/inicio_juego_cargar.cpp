@@ -12,6 +12,9 @@ inicio_juego_cargar::inicio_juego_cargar(QWidget *parent) :
     QPalette palette;
     palette.setBrush(QPalette::Background, bkgnd);
     this->setPalette(palette);
+
+    timer_instructivo = new QTimer();
+
 }
 
 inicio_juego_cargar::~inicio_juego_cargar()
@@ -28,13 +31,37 @@ void inicio_juego_cargar::on_btn_cargar_clicked()
 
     if(jugador->cargar() == true){
 
-        this->hide();
+        //this->hide();
 
-        juego = new MainWindow();
-        juego->show();
-        juego->iniciar(usuario, clave);
+        connect(timer_instructivo, SIGNAL(timeout()), this, SLOT(empezar()));
+        timer_instructivo->start(10000);
+
+        QPixmap bkgndd(":/recursos/instructivo.jpg");
+        bkgndd = bkgndd.scaled(this->size(), Qt::IgnoreAspectRatio);
+        QPalette palettee;
+        palettee.setBrush(QPalette::Background, bkgndd);
+        this->setPalette(palettee);
+
+
+        ui->btn_cargar->hide();
+        ui->le_clave->hide();
+        ui->le_usuario->hide();
 
     }else{
         QMessageBox::information(this, "Informacion", "Resgistro incorrecto o no existe");
     }
+}
+
+void inicio_juego_cargar::empezar()
+{
+    //ejecutar juego
+
+    string usuario = ui->le_usuario->text().toStdString();
+    string clave   = ui->le_clave->text().toStdString();
+
+    timer_instructivo->stop();
+
+    juego = new MainWindow();
+    juego->show();
+    juego->iniciar(usuario, clave);
 }
