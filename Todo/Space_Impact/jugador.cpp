@@ -189,12 +189,16 @@ bool Jugador::guardar()
         //Obtenemos los valores
         valor = in.readLine();
         cuenta.user = valor.toStdString();
+
         valor = in.readLine();
         cuenta.pass = valor.toStdString();
+
         valor = in.readLine();
         cuenta.level = valor.toInt();
+
         valor = in.readLine();
         cuenta.vidas = valor.toInt();
+
         valor = in.readLine();
         cuenta.puntos = valor.toInt();
 
@@ -209,6 +213,12 @@ bool Jugador::guardar()
             p->level = nivel;
             p->vidas = vidas;
             p->puntos = puntos;
+
+            qDebug() << QString::fromStdString(p->user);
+            qDebug() << QString::fromStdString(p->pass);
+            qDebug() << QString::number(p->level);
+            qDebug() << QString::number(p->vidas);
+            qDebug() << QString::number(p->puntos);
         }
     }
 
@@ -218,11 +228,17 @@ bool Jugador::guardar()
         //QMessageBox::Critical(this, "¡Informacion!", "No se puede leer el archivo data_base.txt");
     }else{
         QTextStream out(&archivo);
-
+        int iterador = 0;
         //recorremos el vector para actualizar la base de datos
         for(auto p=begin(contenedor); p != end(contenedor); p++){
-            QString texto = QString::fromStdString(p->user) + "\n" + QString::fromStdString(p->pass) + "\n" + QString::number(p->level) + "\n" + QString::number(p->vidas) + "\n" + QString::number(p->puntos) + "\n";
-            out << texto;
+            if(iterador == 0){
+                QString texto = QString::fromStdString(p->user) + "\n" + QString::fromStdString(p->pass) + "\n" + QString::number(p->level) + "\n" + QString::number(p->vidas) + "\n" + QString::number(p->puntos);
+                out << texto;
+            }else{
+                QString texto = "\n" + QString::fromStdString(p->user) + "\n" + QString::fromStdString(p->pass) + "\n" + QString::number(p->level) + "\n" + QString::number(p->vidas) + "\n" + QString::number(p->puntos);
+                out << texto;
+            }
+            iterador++;
         }
     }
     archivo.close();
@@ -402,6 +418,7 @@ void Jugador::incrementar_puntos(int valor)
 void Jugador::subir_nivel()
 {
     nivel++;
+    guardar();
 }
 
 

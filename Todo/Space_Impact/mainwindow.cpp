@@ -139,7 +139,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
 
     //Tecla de M de menu
     if(evento->key()==Qt::Key_M){
-
+        timer_enemigo->stop();
         this->close();
 
     }
@@ -201,6 +201,10 @@ void MainWindow::MoverEnemigo()
                 enemigos.erase(it);
                 jugador->setVidas(jugador->getVidas()-1);
                 jugador->eliminar_Corazon();
+                if(jugador->getVidas() == 0){
+                    QMessageBox::critical(this, "Informacion", "Perdiste");
+                    this->close();
+                }
                 break;
             }
 
@@ -404,9 +408,8 @@ void MainWindow::Limpiar_y_Detener(){
 
 
 
-    //subo nivel
+    //subo nivel y guardo partida
     jugador->subir_nivel();
-    //scene->clear();
 
     if(jugador->getNivel() <= 5){
         nivel();
@@ -476,7 +479,7 @@ void MainWindow::nivel()
     timer_choques->start(100);
 
     //Add Jefe
-    timer_jefe->start(60000);
+    timer_jefe->start(40000);
 
     //add disparos del jefe
     //timer_jefeDisparo->start(6000);

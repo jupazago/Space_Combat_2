@@ -17,13 +17,11 @@
         <file>recursos/fondo_lvl4.png</file>
         <file>recursos/fondo_lvl5.png</file>
         <file>recursos/jefe1.png</file>
-        <file>recursos/lvl1.png</file>
-        <file>recursos/lvl2.png</file>
-        <file>recursos/niveles.jpg</file>
         <file>recursos/fondo_inicio.jpg</file>
         <file>recursos/fondo_pregunta.jpg</file>
         <file>recursos/fondo_prueba2.jpg</file>
         <file>recursos/fondo_prueba3.jpg</file>
         <file>recursos/instructivo.jpg</file>
+        <file>recursos/bala.mp3</file>
     </qresource>
 </RCC>

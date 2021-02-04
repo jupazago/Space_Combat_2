@@ -552,12 +552,9 @@ qrc_recursos.cpp: ../Space_Impact/recursos.qrc \
 		../Space_Impact/recursos/jefe1.png \
 		../Space_Impact/recursos/fondo_prueba2.jpg \
 		../Space_Impact/recursos/fondo_prueba3.jpg \
-		../Space_Impact/recursos/lvl1.png \
-		../Space_Impact/recursos/lvl2.png \
 		../Space_Impact/recursos/fondo_prueba.jpg \
 		../Space_Impact/recursos/enemigo1.png \
 		../Space_Impact/recursos/bola.png \
-		../Space_Impact/recursos/niveles.jpg \
 		../Space_Impact/recursos/paisaje1.png \
 		../Space_Impact/recursos/fondo_lvl1.png \
 		../Space_Impact/recursos/paisaje2.png \
@@ -569,6 +566,7 @@ qrc_recursos.cpp: ../Space_Impact/recursos.qrc \
 		../Space_Impact/recursos/paisaje5.png \
 		../Space_Impact/recursos/fondo_lvl5.png \
 		../Space_Impact/recursos/amongus.png \
+		../Space_Impact/recursos/bala.mp3 \
 		../Space_Impact/recursos/fondo_pregunta.jpg \
 		../Space_Impact/recursos/instructivo.jpg \
 		../Space_Impact/recursos/data_base.txt \

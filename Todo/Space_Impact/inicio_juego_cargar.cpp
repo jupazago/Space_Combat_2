@@ -14,7 +14,6 @@ inicio_juego_cargar::inicio_juego_cargar(QWidget *parent) :
     this->setPalette(palette);
 
     timer_instructivo = new QTimer();
-
 }
 
 inicio_juego_cargar::~inicio_juego_cargar()
@@ -30,8 +29,6 @@ void inicio_juego_cargar::on_btn_cargar_clicked()
     jugador = new Jugador(usuario, clave);
 
     if(jugador->cargar() == true){
-
-        //this->hide();
 
         connect(timer_instructivo, SIGNAL(timeout()), this, SLOT(empezar()));
         timer_instructivo->start(10000);
@@ -60,7 +57,7 @@ void inicio_juego_cargar::empezar()
     string clave   = ui->le_clave->text().toStdString();
 
     timer_instructivo->stop();
-
+    this->close();
     juego = new MainWindow();
     juego->show();
     juego->iniciar(usuario, clave);
